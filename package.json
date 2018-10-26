@@ -22,7 +22,9 @@
         "postsetup": "npm run dev",
         "heroku-postbuild": "npm run build:prod && npm run build:db",
         "generate:crud": "node tools/generators/crud/index.js",
-        "generate:page": "node tools/generators/page/index.js"
+        "generate:page": "node tools/generators/page/index.js",
+        "presetup:init": "node tools/scripts/setup.js",
+        "setup:init": "npm run setup"
     },
     "keywords": [],
     "author": "",
@@ -56,6 +58,7 @@
         "passport": "^0.4.0",
         "passport-jwt": "^4.0.0",
         "passport-local": "^1.0.0",
+        "prompt": "^1.0.0",
         "prop-types": "^15.6.2",
         "pubsub-js": "^1.6.1",
         "react": "^16.4.2",
