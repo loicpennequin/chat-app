@@ -1,0 +1,18 @@
+.container
+    width: $container-max-width
+    margin: 0 auto
+    +hd-only
+        width: $container-max-width-hd
+
+.text-container
+    max-width: $text-container-width
+    margin: $spacing-sm auto
+    line-height: $textcontent-line-height
+
+    h2, h3, h4
+        margin: $spacing-sm 0
+    ul, ol, p
+        margin-bottom: $spacing-md
+        font-family: $font-serif
+    p
+        text-rendering: optimizeLegibility

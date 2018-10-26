@@ -1,0 +1,27 @@
+//MIXINS
+=fontawesome
+    display: inline-block
+    font-style: normal
+    font-variant: normal
+    text-rendering: auto
+    -webkit-font-smoothing: antialiased
+
+=mobile
+    @media screen and (max-width: 580px)
+        @content
+
+=tablet
+    @media screen and (max-width: 980px)
+        @content
+
+=tablet-only
+    @media screen and (min-width: 581px)
+        @content
+
+=desktop-only
+    @media screen and (min-width: 981px)
+        @content
+
+=hd-only
+    @media screen and (min-width: 1440px)
+        @content
