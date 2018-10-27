@@ -8,11 +8,11 @@
     Globals
     ============================================================================= */
 global.fetch = require('node-fetch');
-global.logger = require('./logger/logger.js');
 
 /*  =============================================================================
     Dependencies
     ============================================================================= */
+const logger = require('./logger/logger.js')(module);
 const express = require('express');
 const helmet = require('helmet');
 const bodyParser = require('body-parser');
@@ -20,7 +20,7 @@ const cookieParser = require('cookie-parser');
 // const favicon = require('serve-favicon');
 const passport = require('passport');
 const session = require('express-session');
-
+const cfg = require('./../../config/constants.js');
 
 /*  =============================================================================
     Init Express App
@@ -41,11 +41,7 @@ require('./middlewares/passport.js')();
 app.disable('x-powered-by');
 app.use(helmet());
 app.use(cookieParser(process.env.COOKIE_SECRET));
-app.use(session({
-    secret: process.env.COOKIE_SECRET,
-    resave: false,
-    saveUninitialized: true,
-}));
+app.use(session(cfg.SESSION_PARAMS));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static('public'));

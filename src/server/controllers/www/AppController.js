@@ -1,12 +1,14 @@
-const logger = require('./../../logger/logger.js');
+const path = require('path');
 const React = require('react');
 const { renderToString } = require('react-dom/server');
 const { matchPath } = require('react-router-dom');
-const path = require('path');
+const logger = require('./../../logger/logger.js')(module);
 
 module.exports = async (req, res, next) => {
     logger.info(`AppController : ${req.url}`);
-    logger.info('=============================================================================');
+    logger.info(
+        '============================================================================='
+    );
     try {
         const appPath = path.join(__dirname, '../../views/app.ssr.js');
         if (process.env.NODE_ENV === 'development') {
@@ -14,13 +16,19 @@ module.exports = async (req, res, next) => {
         }
 
         let { SSREntry, routes } = require(appPath);
-
+        console.log(req.user);
+        if (req.user) {
+            setTimeout(() => {
+                socket.emit('online');
+            }, 5000);
+        }
         routes = routes.filter(route => matchPath(req.url, route));
-
         const dataPromises = routes.map(route => {
-            return route.fetchFn({url: req.params, user_id: req.user && req.user.id});
+            return route.fetchFn({
+                url: req.params,
+                user_id: req.user && req.user.id
+            });
         });
-
         let initialData = {
             authenticated: !!req.user,
             ...(await Promise.all(dataPromises))

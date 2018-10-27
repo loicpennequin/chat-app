@@ -1,5 +1,5 @@
 const fs = require('fs');
-const logger = require('./../../logger/logger.js');
+const logger = require('./../../logger/logger.js')(module);
 
 const toSlice = 'Controller.js'.length;
 let _controllers = {};
@@ -23,7 +23,7 @@ const _handler = (promise, params) => async (req, res, next) => {
                 Object.assign(
                     {},
                     { token: req.token },
-                    {data : data || { message: 'OK' }}
+                    { data: data || { message: 'OK' } }
                 )
             );
     } catch (err) {

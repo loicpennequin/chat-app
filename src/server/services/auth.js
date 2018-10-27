@@ -6,7 +6,7 @@
 
 const bcrypt = require('bcrypt');
 const model = require('../models');
-const logger = require('./../logger/logger.js');
+const logger = require('./../logger/logger.js')(module);
 
 class AuthService {
     static async _getUser(field, value) {
@@ -39,9 +39,7 @@ class AuthService {
         logger.debug('AuthService | ensureAuth');
         try {
             const user = await AuthService._getUser('id', jwtPayload.data.id);
-            user && req.user
-                ? done(null, { id: user.id })
-                : done(null, false);
+            user && req.user ? done(null, { id: user.id }) : done(null, false);
         } catch (err) {
             logger.error(err.stack);
             return done(err);

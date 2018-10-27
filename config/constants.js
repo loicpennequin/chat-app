@@ -19,5 +19,10 @@ module.exports = Object.freeze({
         HOW_MANY_CATEGORIES: 5,
         HOW_MANY_TAGS: 10,
         TAGS_PER_ARTICLE: 3
+    }),
+    SESSION_PARAMS : Object.freeze({
+        secret: process.env.COOKIE_SECRET,
+        resave: false,
+        saveUninitialized: true,
     })
 });

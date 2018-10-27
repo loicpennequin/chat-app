@@ -3,6 +3,7 @@
 *
 */
 const models = require('./../../models');
+const logger = require('./../../logger/logger.js')(module);
 
 class ContactController {
     async findByUser(id, queryParams) {
@@ -24,7 +25,7 @@ class ContactController {
         logger.debug('ContactController | findbyId');
         return {
             data: {
-                ...await models.Contact.findOne(id, queryParams)
+                ...(await models.Contact.findOne(id, queryParams))
             }
         };
     }

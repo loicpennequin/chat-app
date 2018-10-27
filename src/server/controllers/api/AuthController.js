@@ -3,7 +3,7 @@
 *
 */
 const jwt = require('jsonwebtoken');
-const logger = require('./../../logger/logger.js');
+const logger = require('./../../logger/logger.js')(module);
 
 class AuthController {
     constructor() {

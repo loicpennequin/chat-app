@@ -31,7 +31,6 @@ let init = cfg => {
                         localStorage.setItem('token', json.token);
                     }
                     if (json._userId) {
-                        console.log(json._userId);
                         localStorage.setItem('uid', json._userId);
                     }
                     return json.data;

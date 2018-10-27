@@ -3,14 +3,14 @@
 *
 */
 const models = require('./../../models');
+const logger = require('./../../logger/logger.js')(module);
 const contactStatus = require('./../../enums/contactStatus.js');
+
 class UserController {
     async findAll(queryParams) {
         logger.debug('UserController | findAll');
         return {
-            data: [
-                ...await models.User.findAll(null, null, queryParams)
-            ]
+            data: [...(await models.User.findAll(null, null, queryParams))]
         };
     }
 
@@ -25,11 +25,16 @@ class UserController {
             .query({
                 where: { sender_id: user.id },
                 orWhere: { sendee_id: user.id },
-                andWhere: {status: contactStatus.ACCEPTED}
+                andWhere: { status: contactStatus.ACCEPTED }
             })
-            .fetchAll({withRelated: ['sendee', 'sender']}))
+            .fetchAll({ withRelated: ['sendee', 'sender'] }))
             .toJSON()
-            .map(contact => contact.sender_id === user.id ? contact.sendee : contact.sender);
+            .map(
+                contact =>
+                    contact.sender_id === user.id
+                        ? contact.sendee
+                        : contact.sender
+            );
         return {
             data: {
                 ...user
@@ -41,7 +46,7 @@ class UserController {
         logger.debug('UserController | create');
         return {
             data: {
-                ...await models.User.create(data)
+                ...(await models.User.create(data))
             }
         };
     }
@@ -50,7 +55,7 @@ class UserController {
         logger.debug('UserController | destroy');
         return {
             data: {
-                ...await models.User.destroy(id, queryParams)
+                ...(await models.User.destroy(id, queryParams))
             }
         };
     }
@@ -59,7 +64,7 @@ class UserController {
         logger.debug('UserController | update');
         return {
             data: {
-                ...await models.User.update(id, {}, data)
+                ...(await models.User.update(id, {}, data))
             }
         };
     }
