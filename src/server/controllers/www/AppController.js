@@ -7,7 +7,8 @@ const logger = require('./../../logger/logger.js')(module);
 module.exports = async (req, res, next) => {
     logger.info(`AppController : ${req.url}`);
     logger.info(
-        '============================================================================='
+        `
+      =============================================================================`
     );
     try {
         const appPath = path.join(__dirname, '../../views/app.ssr.js');
@@ -16,7 +17,7 @@ module.exports = async (req, res, next) => {
         }
 
         let { SSREntry, routes } = require(appPath);
-        console.log(req.user);
+
         if (req.user) {
             setTimeout(() => {
                 socket.emit('online');

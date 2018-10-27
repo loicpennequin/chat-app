@@ -11,7 +11,10 @@ const getLabel = ({ filename }) => {
 };
 
 const myFormat = winston.format.printf(
-    info => `${info.level} - [${info.label}]: ${info.message}`
+    info =>
+        `${info.level} ${
+            info.level === 'error' ? '-  [' + info.label + ']' : ''
+        }: ${info.message}`
 );
 
 const loggerFn = callingModule => {
