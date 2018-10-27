@@ -27,7 +27,10 @@ class Prefetcher extends Component {
 
     async fetchInitialData() {
         if (__IS_BROWSER__) {
-            const data = await this.props.fetchFn({ url: this.props.match.params, user_id : localStorage.getItem('uid')});
+            const data = await this.props.fetchFn({
+                url: this.props.match.params,
+                user_id: localStorage.getItem('uid')
+            });
             await this.props.setState(data);
         }
         this.setState({

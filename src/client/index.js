@@ -6,6 +6,7 @@ import App from './components/App.jsx';
 import routes from './resources/services/routesService.js';
 import './styles/app.sass';
 import './resources/services/iconService.js';
+import { init } from './resources/services/RESTService.js';
 
 if (!__IS_BROWSER__) {
     require('source-map-support').install();
@@ -17,4 +18,4 @@ if (!__IS_BROWSER__) {
 
 const SSREntry = hot(module)(App);
 
-export { routes, SSREntry };
+export { routes, SSREntry, init as RESTInit };

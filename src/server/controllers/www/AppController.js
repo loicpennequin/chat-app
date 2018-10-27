@@ -16,24 +16,28 @@ module.exports = async (req, res, next) => {
             delete require.cache[appPath];
         }
 
-        let { SSREntry, routes } = require(appPath);
+        let { SSREntry, routes, RESTInit } = require(appPath);
 
-        if (req.user) {
-            setTimeout(() => {
-                socket.emit('online');
-            }, 5000);
-        }
+        // if (req.user) {
+        //     setTimeout(() => {
+        //         socket.emit('online');
+        //     }, 5000);
+        // }
+
         routes = routes.filter(route => matchPath(req.url, route));
+        RESTInit({});
         const dataPromises = routes.map(route => {
             return route.fetchFn({
                 url: req.params,
                 user_id: req.user && req.user.id
             });
         });
+        console.log(req.user);
         let initialData = {
             authenticated: !!req.user,
             ...(await Promise.all(dataPromises))
         };
+        console.log(initialData);
 
         const markup = renderToString(
             React.createElement(SSREntry, {

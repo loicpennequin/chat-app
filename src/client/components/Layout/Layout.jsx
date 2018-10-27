@@ -27,11 +27,7 @@ class Layout extends Component {
 
     render() {
         const { authenticated } = this.props;
-        return authenticated ? (
-            <PrivateLayout />
-        ) : (
-            <PublicLayout />
-        );
+        return authenticated ? <PrivateLayout /> : <PublicLayout />;
     }
 }
 
