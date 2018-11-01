@@ -10,6 +10,7 @@ export default class UserModel {
     }
 
     static async find(id) {
+        console.log('UserModel.find');
         try {
             const user = await api.get(`/users/${id}`);
             return user;

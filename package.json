@@ -6,29 +6,23 @@
     "scripts": {
         "start": "node src/server/index.js",
         "dev": "cross-env NODE_ENV=development nodemon src/server/index.js",
-
         "build:prod": "webpack --env.NODE_ENV=production",
         "build:dev": "webpack --env.NODE_ENV=development",
-
         "prebuild:db": "node tools/scripts/createDB.js",
         "build:db": "node tools/scripts/migrate.js",
         "postbuild:db": "knex seed:run",
-
         "lint": "./node_modules/.bin/eslint --ignore-path .eslintignore --ignore-pattern *.test.js --ignore-pattern *.config.js .",
-
         "pretest": "npm run lint",
         "test": "jest",
-
         "predeploy": "npm run lint",
         "deploy": "git add . && git commit -m",
         "postdeploy": "git push origin master",
-
         "presetup": "npm install",
         "setup": "npm run build:db",
         "postsetup": "npm run dev",
-
+        "presetup:init": "npm install prompt && node tools/scripts/setup.js",
+        "setup:init": "npm run setup",
         "heroku-postbuild": "npm run build:prod && npm run build:db",
-
         "generate:crud": "node tools/generators/crud/index.js",
         "generate:page": "node tools/generators/page/index.js"
     },

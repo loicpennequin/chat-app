@@ -15,6 +15,6 @@ module.exports = {
     profile: async ({ params, user }) => ({
         currentUser: await getCurrentUser(user),
         profile: await models.User.findById(params.id),
-        isOwnProfile: user.id === params.id
+        isOwnProfile: user.id === parseInt(params.id, 10)
     })
 };

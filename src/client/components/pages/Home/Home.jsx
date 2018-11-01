@@ -26,13 +26,17 @@ class Home extends Component {
 
     render() {
         const { registerErrors, registerSuccess } = this.state;
+        const successMessage = (
+            <p style={{ color: 'green' }}>
+                Registration successful. You can sign in
+                <Link to="/login">Here</Link>
+            </p>
+        );
+
         return (
             <>
                 {registerSuccess ? (
-                    <p style={{ color: 'green' }}>
-                        Registration successful. You can sign in{' '}
-                        <Link to="/login">Here</Link>
-                    </p>
+                    successMessage
                 ) : (
                     <>
                         <RegisterForm

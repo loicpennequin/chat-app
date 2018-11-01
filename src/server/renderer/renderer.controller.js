@@ -6,11 +6,16 @@ const template = require('./template.js');
 const prefetcher = require('./prefetcher.js');
 
 const getInitialData = async (req, res, routes) => {
-    const dataPromises = routes.map(route => prefetcher[route.dataFetchKey](req));
+    const dataPromises = routes.map(route =>
+        prefetcher[route.dataFetchKey](req)
+    );
+
     const fetchedData = await Promise.all(dataPromises);
     const initialData = {
         authenticated: !!req.user,
-        ...fetchedData.reduce((acc, current) => Object.assign(acc, {...current}))
+        ...fetchedData.reduce((acc, current) =>
+            Object.assign(acc, { ...current })
+        )
     };
     return initialData;
 };
@@ -24,11 +29,14 @@ module.exports = async (req, res) => {
         if (process.env.NODE_ENV === 'development') {
             delete require.cache[bundlePath];
         }
-
         const { SSREntry, routes } = require(bundlePath);
+
         routeMatches = routes.filter(route => matchPath(req.url, route));
 
-        if ( routeMatches.some(route => route.authLevel === 'private') && !req.isAuthenticated()){
+        if (
+            routeMatches.some(route => route.authLevel === 'private') &&
+            !req.isAuthenticated()
+        ) {
             res.redirect('/login');
         } else {
             const initialData = await getInitialData(req, res, routeMatches);
@@ -37,13 +45,12 @@ module.exports = async (req, res) => {
                 React.createElement(SSREntry, {
                     location: req.url,
                     context: {},
-                    initialData : initialData,
+                    initialData: initialData,
                     routes
                 })
             );
             res.send(template('app', markup, initialData));
         }
-
     } catch (err) {
         logger.error(err.stack);
     }

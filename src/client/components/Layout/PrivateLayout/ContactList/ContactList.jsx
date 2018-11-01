@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { subscribe } from 'react-contextual';
+import ContactListLoader from './../../../loaders/ContactListLoader.jsx';
 
 const Contact = ({ contact }) => (
     <li>
@@ -17,7 +18,7 @@ class ContactList extends Component {
         const { currentUser } = this.props;
 
         const contacts = !currentUser?.contacts ? (
-            <div>loading contact list...</div>
+            <ContactListLoader />
         ) : !currentUser.contacts.length > 0 ? (
             <div>You dont have any contact yet.</div>
         ) : (

@@ -69,11 +69,9 @@ module.exports = () => {
         )
     );
 
-    passport.serializeUser((user, done) => {
-        return done(null, user);
-    });
+    passport.serializeUser((user, done) => done(null, user));
 
-    passport.deserializeUser(async (id, done) => {
-        return done(null, await getUser('id', id));
-    });
+    passport.deserializeUser(async (id, done) =>
+        done(null, await getUser('id', id))
+    );
 };

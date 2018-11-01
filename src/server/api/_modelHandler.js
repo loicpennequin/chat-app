@@ -8,14 +8,19 @@ module.exports = class Model {
 
     async findAll(filter, options, params) {
         logger.debug(`${this.name}Model | findAll`);
-        let rows = await this._model
-            .forge()
-            .where(Object.assign({}, filter));
-        if (params && params.orderBy){
+        let rows = await this._model.forge().where(Object.assign({}, filter));
+        if (params && params.orderBy) {
             const parsed = JSON.parse(params.orderBy);
             rows = rows.orderBy(parsed[0], parsed[1]);
         }
-        rows = await rows.fetchAll(options);
+        if (options && (options.limit || options.offset)) {
+            rows = await rows.fetchPage({
+                limit: options.limit,
+                offset: options.offset
+            });
+        } else {
+            rows = await rows.fetchAll(options);
+        }
         return rows.toJSON(options ? options.serialize : '');
     }
 
@@ -38,7 +43,9 @@ module.exports = class Model {
         const validationErrors = model.validationErrors();
         return validationErrors
             ? { error: { ...validationErrors } }
-            : (await model.save(null, options)).toJSON(options ? options.serialize : '');
+            : (await model.save(null, options)).toJSON(
+                options ? options.serialize : ''
+            );
     }
 
     async destroy(options) {
