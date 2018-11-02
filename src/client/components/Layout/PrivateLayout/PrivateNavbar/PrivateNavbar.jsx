@@ -2,12 +2,22 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { subscribe } from 'react-contextual';
 import AuthModel from './../../../../resources/models/AuthModel.js';
+import ContactRequestList from './../../../contact/ContactRequestList/ContactRequestList.jsx';
 import './PrivateNavbar.sass';
 
 @subscribe(mapStateToProps)
 class PrivateNavbar extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            showRequests: false
+        };
+
+        this.toggleRequests = this.toggleRequests.bind(this);
+    }
+
+    toggleRequests() {
+        this.setState(state => ({ showRequests: !state.showRequests }));
     }
 
     async logout() {
@@ -17,6 +27,7 @@ class PrivateNavbar extends Component {
 
     render() {
         const requests = this.props?.currentUser?.contactRequests?.recieved;
+        const { showRequests } = this.state;
 
         return (
             <nav styleName="navbar">
@@ -25,7 +36,12 @@ class PrivateNavbar extends Component {
                     Logout
                 </a>
                 {requests?.length > 0 && (
-                    <button>{requests?.length} new contact requests</button>
+                    <>
+                        <button onClick={this.toggleRequests}>
+                            {requests?.length} new contact requests
+                        </button>
+                        {showRequests ? <ContactRequestList /> : null}
+                    </>
                 )}
             </nav>
         );

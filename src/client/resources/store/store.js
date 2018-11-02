@@ -1,6 +1,6 @@
 import routes from './../services/routesService.js';
 
-const store ={
+const store = {
     routes,
     authenticated: false,
     login: () => state => ({ authenticated: true }),
@@ -9,7 +9,8 @@ const store ={
         localStorage.removeItem('uid');
         return { authenticated: false };
     },
-    setCurrentUser: currentUser => state => ({ currentUser })
+    setCurrentUser: currentUser => state => ({ currentUser }),
+    setProfile: profile => state => ({ profile })
 };
 
 export default store;

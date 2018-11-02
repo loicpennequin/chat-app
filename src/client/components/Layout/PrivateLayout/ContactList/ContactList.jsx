@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import { subscribe } from 'react-contextual';
 import ContactListLoader from './../../../loaders/ContactListLoader.jsx';
 
 const Contact = ({ contact }) => (
     <li>
         {contact.username} | {contact.email}
+        <Link to={`/profile/${contact.id}`}>See profile</Link>
     </li>
 );
 

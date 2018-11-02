@@ -58,7 +58,7 @@ module.exports = class Model {
 
     async update(data, options) {
         options = Object.assign({ patch: true, require: true }, options);
-        return (await this_model
+        return (await this._model
             .forge({ [this._model.prototype.idAttribute]: options.id })
             .fetch(options)
             .then(

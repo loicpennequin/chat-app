@@ -1,17 +1,29 @@
 import React, { Component } from 'react';
 import { subscribe } from 'react-contextual';
+import { withRouter } from 'react-router-dom';
 import UserModel from './../../../resources/models/UserModel.js';
 import ContactModel from './../../../resources/models/ContactModel.js';
 import './Profile.sass';
 
+@withRouter
 @subscribe(mapStateToProps)
 class Profile extends Component {
+    static getDerivedStateFromProps(nextProps, prevState) {
+        if (nextProps.match.params.id !== prevState.id) {
+            return { id: nextProps.match.params.id };
+        } else {
+            return null;
+        }
+    }
+
     constructor(props) {
         super(props);
         this.state = {
-            isFriend: !this.props.currentUser.contacts.some(
-                c => c.id === profile.id
-            )
+            isFriend:
+                !this.props.isOwnProfile &&
+                !this.props.currentUser.contacts.some(
+                    c => c.id === this.props.profile.id
+                )
         };
 
         this.sendContactRequest = this.sendContactRequest.bind(this);
@@ -20,12 +32,16 @@ class Profile extends Component {
     async sendContactRequest() {
         const { currentUser, profile } = this.props;
 
-        const req = await ContactModel.create({
+        ContactModel.create({
             sender_id: currentUser.id,
             sendee_id: profile.id
         });
+    }
 
-        console.log(req);
+    async componentDidUpdate(prevProps, prevState) {
+        if (prevState.id !== this.state.id) {
+            this.props.setProfile(await UserModel.find(this.state.id));
+        }
     }
 
     render() {
@@ -52,12 +68,13 @@ function mapStateToProps(store) {
     return {
         currentUser: store.currentUser,
         profile: store.profile,
-        isOwnProfile: store.isOwnProfile
+        isOwnProfile: store.isOwnProfile,
+        setProfile: store.setProfile
     };
 }
 
 const profileFetch = async params => ({
-    currentUser: await UserModel.find(params.user_id),
+    currentUser: await UserModel.findSelf(),
     profile: await UserModel.find(params.url.id),
     isOwnProfile: params.url.id === params.user_id
 });

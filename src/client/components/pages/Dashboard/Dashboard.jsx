@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { subscribe } from 'react-contextual';
 import UserModel from './../../../resources/models/UserModel.js';
+import { Link } from 'react-router-dom';
 
 @subscribe(mapStateToProps)
 class Dashboard extends Component {
@@ -13,6 +14,7 @@ class Dashboard extends Component {
         return currentUser ? (
             <>
                 <h1>Hello {currentUser?.username} ! this is your dashboard.</h1>
+                <Link to={`/profile/${currentUser.id}`}>Your profile</Link>
             </>
         ) : (
             <div>Dashboard Loading...</div>

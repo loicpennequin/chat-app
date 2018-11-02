@@ -3,6 +3,15 @@ const Contact = require('./../contact/contact.model.js');
 const contactStatus = require('./../../enums/contactStatus.js');
 
 const UserController = function() {
+    this._formatContactRequest = (contact, id) =>
+        Object.assign(
+            {},
+            { date: contact.created_at, request_id: contact.id },
+            {
+                ...contact[contact.sender_id === id ? 'sendee' : 'sender']
+            }
+        );
+
     this._getContacts = async id =>
         (await Contact._model
             .forge()
@@ -13,10 +22,7 @@ const UserController = function() {
             })
             .fetchAll({ withRelated: ['sendee', 'sender'] }))
             .toJSON()
-            .map(
-                contact =>
-                    contact.sender_id === id ? contact.sendee : contact.sender
-            );
+            .map(contact => this._formatContactRequest(contact, id));
 
     this._getContactRequests = async id =>
         (await Contact._model
@@ -31,20 +37,23 @@ const UserController = function() {
             .reduce(
                 (acc, contact) => {
                     if (contact.sender_id === id) {
-                        acc.sent.push(contact.sendee);
+                        acc.sent.push(this._formatContactRequest(contact, id));
                     } else {
-                        acc.recieved.push(contact.sender);
+                        acc.recieved.push(
+                            this._formatContactRequest(contact, id)
+                        );
                     }
                     return acc;
                 },
                 { sent: [], recieved: [] }
             );
 
-    this._getUserInfo = async user =>
-        Object.assign(user, {
+    this._getUserInfo = async user => {
+        return Object.assign(user, {
             contacts: await this._getContacts(user.id),
             contactRequests: await this._getContactRequests(user.id)
         });
+    };
 
     this.findAll = async queryParams => {
         logger.debug('UserController | findAll');
@@ -56,7 +65,6 @@ const UserController = function() {
     this.findOne = async (query, options) => {
         logger.debug('UserController | findOne');
         const user = await User.findOne(query, options);
-
         return {
             data: {
                 ...(await this._getUserInfo(user))

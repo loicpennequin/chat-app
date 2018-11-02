@@ -7,7 +7,7 @@ import { withRouter } from 'react-router-dom';
 @subscribe(mapStateToProps)
 class Prefetcher extends Component {
     state = {
-        fetching: __IS_BROWSER__ && !window.__INITIAL_DATA__
+        fetching: __IS_BROWSER__ && this.props.needPrefetch
     };
 
     componentDidMount() {

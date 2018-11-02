@@ -27,7 +27,6 @@ const authenticate = async (username, password, done) => {
     logger.debug('AuthService | authenticate');
     try {
         const user = await getUser('username', username);
-        console.log(user);
         return user ? comparePassword(password, user, done) : done(null, user);
     } catch (err) {
         return done(err);

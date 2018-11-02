@@ -11,7 +11,6 @@ let cfg = {
         password: process.env.DB_PASSWORD || '',
         charset: 'utf8'
     },
-    // debug: true,
     migrations: {
         directory: './tools/migrations'
     },
