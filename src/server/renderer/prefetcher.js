@@ -1,20 +1,14 @@
-const models = require('./../api').models;
-const getUserContacts = require('./../utils/getUserContacts.js');
-
-const getCurrentUser = async user =>
-    Object.assign({}, await models.User.findById(user.id), {
-        contacts: await getUserContacts(user.id)
-    });
+const { User } = require('./../api').controllers;
 
 module.exports = {
     home: async ({ params, user }) => ({}),
     login: async ({ params, user }) => ({}),
     dashboard: async ({ params, user }) => ({
-        currentUser: await getCurrentUser(user)
+        currentUser: (await User.findById(user)).data
     }),
     profile: async ({ params, user }) => ({
-        currentUser: await getCurrentUser(user),
-        profile: await models.User.findById(params.id),
+        currentUser: (await User.findById(user)).data,
+        profile: (await User.findById(params.id)).data,
         isOwnProfile: user.id === parseInt(params.id, 10)
     })
 };

@@ -26,6 +26,7 @@ module.exports = class Model {
 
     async findOne(query, options) {
         options = Object.assign({ require: true }, options);
+
         return (await this._model.forge(query).fetch(options)).toJSON(
             options ? options.serialize : ''
         );

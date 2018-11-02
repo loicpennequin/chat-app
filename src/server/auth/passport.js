@@ -8,7 +8,7 @@ const LocalStrategy = require('passport-local').Strategy;
 const JwtStrategy = require('passport-jwt').Strategy;
 const ExtractJwt = require('passport-jwt').ExtractJwt;
 const bcrypt = require('bcrypt');
-const { User } = require('./../api').models;
+const { User } = require('./../api').controllers;
 
 const comparePassword = (password, user, done) => {
     return bcrypt.compare(password, user.password, (err, result) => {
@@ -17,17 +17,17 @@ const comparePassword = (password, user, done) => {
     });
 };
 
-const getUser = async (field, value) => {
-    return await User.findOne(
+const getUser = async (field, value) =>
+    (await User.findOne(
         { [field]: value },
         { serialize: { visibility: false } }
-    );
-};
+    )).data;
 
 const authenticate = async (username, password, done) => {
     logger.debug('AuthService | authenticate');
     try {
         const user = await getUser('username', username);
+        console.log(user);
         return user ? comparePassword(password, user, done) : done(null, user);
     } catch (err) {
         return done(err);

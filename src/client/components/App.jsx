@@ -7,16 +7,13 @@ import i18n from './../resources/services/i18NextService.js';
 import { hot } from 'react-hot-loader';
 import { BrowserRouter, StaticRouter } from 'react-router-dom';
 import Layout from './Layout/Layout.jsx';
+
 const Router = __IS_BROWSER__ ? BrowserRouter : StaticRouter;
 
 class App extends Component {
     static propTypes = {
         routes: PropTypes.arrayOf(PropTypes.object).isRequired
     };
-
-    constructor(props) {
-        super(props);
-    }
 
     render() {
         const initialData = this.props.initialData
