@@ -1,7 +1,7 @@
 import React from 'react';
 import { hydrate } from 'react-dom';
 import { hot } from 'react-hot-loader';
-// import './resources/services/ioService.js';
+import './resources/services/ioService.js';
 import App from './components/App.jsx';
 import routes from './resources/services/routesService.js';
 import './styles/app.sass';

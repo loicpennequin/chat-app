@@ -91,6 +91,18 @@ const UserController = function() {
             }
         };
     };
+
+    this.setOnline = async id => {
+        logger.debug('UserController | setOnline');
+        await User.update({ is_online: 1 }, { id });
+        return (await this.findById(id)).data;
+    };
+
+    this.setOffline = async id => {
+        logger.debug('UserController | setOnline');
+        await User.update({ is_online: 0 }, { id });
+        return (await this.findById(id)).data;
+    };
 };
 
 module.exports = new UserController();

@@ -3,6 +3,7 @@ import { withRouter } from 'react-router-dom';
 import { subscribe } from 'react-contextual';
 import PublicLayout from './PublicLayout/PublicLayout.jsx';
 import PrivateLayout from './PrivateLayout/PrivateLayout.jsx';
+import socket from './../../resources/services/ioService.js';
 import { init } from './../../resources/services/RESTService.js';
 import Routes from './../Routes/Routes.jsx';
 
@@ -30,6 +31,18 @@ class Layout extends Component {
         init({ unauthorized: this.props.logout });
     }
 
+    componentDidMount() {
+        if (this.props.authenticated) {
+            socket.emit('user logged in', {
+                id: this.props.currentUser.id
+            });
+        }
+
+        // socket.on('contact logged in', ({ username }) => {
+        //     console.log(username + ' logged in !');
+        // });
+    }
+
     render() {
         const { authenticated, routes } = this.props;
         const { needPrefetch } = this.state;
@@ -53,6 +66,7 @@ class Layout extends Component {
 function mapStateToProps(store) {
     return {
         authenticated: store.authenticated,
+        currentUser: store.currentUser,
         routes: store.routes
     };
 }

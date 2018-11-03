@@ -5,7 +5,7 @@ import ContactListLoader from './../../../loaders/ContactListLoader.jsx';
 
 const Contact = ({ contact }) => (
     <li>
-        {contact.username} | {contact.email}
+        {contact.username}|
         <Link to={`/profile/${contact.id}`}>See profile</Link>
     </li>
 );

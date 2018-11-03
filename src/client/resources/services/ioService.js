@@ -3,6 +3,10 @@ import constants from './constants.js';
 
 const socket = __IS_BROWSER__
     ? io(constants.API_URL, { transports: ['websocket'] })
-    : null;
+    : { on: () => {}, emit: () => {} };
+
+socket.on('contact logged in', ({ username }) => {
+    console.log(username + ' logged in !');
+});
 
 export default socket;
