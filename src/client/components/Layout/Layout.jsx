@@ -42,11 +42,13 @@ class Layout extends Component {
         }
         socket.on('contact logged in', this.updateUser);
         socket.on('contact logged out', this.updateUser);
+        socket.on('new contact request', this.updateUser);
     }
 
     componentWillUnmount() {
         socket.off('contact logged in', this.updateUser);
         socket.off('contact logged off', this.updateUser);
+        socket.off('new contact request', this.updateUser);
     }
 
     async updateUser(data) {

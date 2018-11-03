@@ -5,19 +5,28 @@ function getIo() {
 
 const sockets = {
     forEach: cb => {
-        const { io } = getIo();
+        const { io, socket } = getIo();
         Object.keys(io.sockets.sockets).forEach(_socket => {
-            cb(io.sockets.sockets[_socket]);
+            cb(io.sockets.sockets[_socket], io, socket);
         });
     },
-    emitToContacts: (contacts, message, data) => {
-        const { io } = getIo();
-
-        Object.keys(io.sockets.sockets).forEach(_socket => {
-            const socket = io.sockets.sockets[_socket];
-
-            if (socket.user && contacts.some(c => c.id === socket.user.id)) {
-                io.to(_socket).emit(message, data(socket));
+    emitToAllContacts: (contacts, message, data = () => ({})) => {
+        sockets.forEach((_socket, io) => {
+            if (_socket.user && contacts.some(c => c.id === _socket.user.id)) {
+                logger.info(
+                    'Websockets | emitting to ' + _socket.user.username
+                );
+                io.to(_socket.id).emit(message, data(_socket));
+            }
+        });
+    },
+    emitToContact: (contactId, message, data = () => ({})) => {
+        sockets.forEach((_socket, io) => {
+            if (_socket.user && _socket.user.id === contactId) {
+                logger.info(
+                    'Websockets | emitting to ' + _socket.user.username
+                );
+                io.to(_socket.id).emit(message, data(_socket));
             }
         });
     }

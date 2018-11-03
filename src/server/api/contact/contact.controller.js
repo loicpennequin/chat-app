@@ -11,9 +11,12 @@ const ContactController = function() {
 
     this.create = async data => {
         logger.debug('ContactController | create');
+        const contact = await Contact.create(data);
+        const { contactRequestEvents } = require('./../../websockets');
+        contactRequestEvents.newRequest(contact.sendee_id);
         return {
             data: {
-                ...(await Contact.create(data))
+                ...contact
             }
         };
     };
