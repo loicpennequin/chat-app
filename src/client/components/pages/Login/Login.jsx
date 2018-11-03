@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { subscribe } from 'react-contextual';
 import LoginForm from './LoginForm/LoginForm.jsx';
-import socket from './../../../resources/services/ioService.js';
 import AuthModel from './../../../resources/models/AuthModel.js';
 
 @subscribe(mapStateToProps)
@@ -13,9 +12,6 @@ class Login extends Component {
         if (error) {
             this.setState({ loginError: error });
         } else {
-            socket.emit('user logged in', {
-                id: localStorage.getItem('uid')
-            });
             this.props.login();
         }
     }

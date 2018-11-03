@@ -4,7 +4,6 @@ const { matchPath } = require('react-router-dom');
 const path = require('path');
 const template = require('./template.js');
 const prefetcher = require('./prefetcher.js');
-const { io, socket } = require('./../websockets');
 
 const getInitialData = async (req, res, routes) => {
     const dataPromises = routes.map(route =>

@@ -8,7 +8,7 @@ module.exports = {
 
         io.on('connection', _socket => {
             socket = _socket;
-            logger.info(`socket connected, socketId : ${socket.id}`);
+            // logger.info(`socket connected, socketId : ${socket.id}`);
 
             connexionEvents(io, socket);
         });

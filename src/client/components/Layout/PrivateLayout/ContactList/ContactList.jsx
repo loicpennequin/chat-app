@@ -10,6 +10,14 @@ const Contact = ({ contact }) => (
     </li>
 );
 
+const ContactSection = ({ contacts }) => (
+    <ul>
+        {contacts.map(contact => (
+            <Contact key={contact.id} contact={contact} />
+        ))}
+    </ul>
+);
+
 @subscribe(mapStateToProps)
 class ContactList extends Component {
     constructor(props) {
@@ -19,21 +27,32 @@ class ContactList extends Component {
     render() {
         const { currentUser } = this.props;
 
+        const onlineContacts = currentUser?.contacts?.filter(
+            c => c.is_online === 1
+        );
+        const offlineContacts = currentUser?.contacts?.filter(
+            c => c.is_online === 0
+        );
+
+        const onlineList = <ContactSection contacts={onlineContacts} />;
+        const offlineList = <ContactSection contacts={offlineContacts} />;
+
         const contacts = !currentUser?.contacts ? (
             <ContactListLoader />
         ) : !currentUser.contacts.length > 0 ? (
             <div>You dont have any contact yet.</div>
         ) : (
-            <ul>
-                {currentUser.contacts.map(contact => (
-                    <Contact key={contact.id} contact={contact} />
-                ))}
-            </ul>
+            <>
+                <h3>Online({onlineContacts.length})</h3>
+                {onlineList}
+                <h3>Offline({offlineContacts.length})</h3>
+                {offlineList}
+            </>
         );
 
         return (
             <aside>
-                <h3>contacts</h3>
+                <h2>contacts</h2>
                 {contacts}
             </aside>
         );

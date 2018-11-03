@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { subscribe } from 'react-contextual';
-import PublicLayout from './PublicLayout/PublicLayout.jsx';
-import PrivateLayout from './PrivateLayout/PrivateLayout.jsx';
 import socket from './../../resources/services/ioService.js';
 import { init } from './../../resources/services/RESTService.js';
+import UserModel from './../../resources/models/UserModel.js';
+import PublicLayout from './PublicLayout/PublicLayout.jsx';
+import PrivateLayout from './PrivateLayout/PrivateLayout.jsx';
 import Routes from './../Routes/Routes.jsx';
 
 @withRouter
@@ -29,6 +30,8 @@ class Layout extends Component {
         };
 
         init({ unauthorized: this.props.logout });
+
+        this.updateUser = this.updateUser.bind(this);
     }
 
     componentDidMount() {
@@ -37,10 +40,18 @@ class Layout extends Component {
                 id: this.props.currentUser.id
             });
         }
+        socket.on('contact logged in', this.updateUser);
+        socket.on('contact logged out', this.updateUser);
+    }
 
-        // socket.on('contact logged in', ({ username }) => {
-        //     console.log(username + ' logged in !');
-        // });
+    componentWillUnmount() {
+        socket.off('contact logged in', this.updateUser);
+        socket.off('contact logged off', this.updateUser);
+    }
+
+    async updateUser(data) {
+        console.log(data);
+        this.props.setCurrentUser(await UserModel.findSelf());
     }
 
     render() {
@@ -67,7 +78,8 @@ function mapStateToProps(store) {
     return {
         authenticated: store.authenticated,
         currentUser: store.currentUser,
-        routes: store.routes
+        routes: store.routes,
+        setCurrentUser: store.setCurrentUser
     };
 }
 
