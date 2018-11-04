@@ -23,9 +23,12 @@ const ContactController = function() {
 
     this.accept = async id => {
         logger.debug('ContactController | accept');
+        const { contactRequestEvents } = require('./../../websockets');
+        const contact = await Contact.update({ status: ACCEPTED }, { id });
+        contactRequestEvents.acceptRequest(contact.sender_id);
         return {
             data: {
-                ...(await Contact.update({ status: ACCEPTED }, { id }))
+                ...contact
             }
         };
     };

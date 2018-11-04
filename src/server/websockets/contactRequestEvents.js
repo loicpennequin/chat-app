@@ -5,6 +5,9 @@ module.exports = {
     emit: (io, socket) => ({
         newRequest: userId => {
             sockets.emitToContact(userId, 'new contact request');
+        },
+        acceptRequest: userId => {
+            sockets.emitToContact(userId, 'contact request accepted');
         }
     })
 };
