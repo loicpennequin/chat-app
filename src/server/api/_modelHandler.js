@@ -8,7 +8,15 @@ module.exports = class Model {
 
     async findAll(filter, options, params) {
         logger.debug(`${this.name}Model | findAll`);
-        let rows = await this._model.forge().where(Object.assign({}, filter));
+        let rows;
+        if (Array.isArray(JSON.parse(filter))) {
+            rows = await this._model.forge().where(...JSON.parse(filter));
+        } else {
+            rows = await this._model
+                .forge()
+                .where(Object.assign({}, JSON.parse(filter)));
+        }
+
         if (params && params.orderBy) {
             const parsed = JSON.parse(params.orderBy);
             rows = rows.orderBy(parsed[0], parsed[1]);

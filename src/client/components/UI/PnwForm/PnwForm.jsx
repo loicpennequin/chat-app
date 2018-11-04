@@ -11,12 +11,14 @@ import {
 } from 'informed';
 
 const FormField = ({ field, errors }) => {
+    let { type, id, label, name, options, onChange, ...rest } = field;
+
     let Field;
     let FieldOption;
     let className;
     let optionClassName;
 
-    switch (field.type) {
+    switch (type) {
         case 'textarea':
             Field = TextArea;
             className = 'textarea';
@@ -42,30 +44,31 @@ const FormField = ({ field, errors }) => {
             className = 'text';
     }
 
-    const options =
-        field.options &&
-        field.options.map((opt, i) => (
-            <label className="radio-label" key={`${field.id}-${opt.id}`}>
-                <FieldOption
-                    value={opt.value}
-                    id={opt.id}
-                    className={optionClassName}
-                >
-                    {opt.label}
-                </FieldOption>
-            </label>
-        ));
+    options = options?.map((opt, i) => (
+        <label className="radio-label" key={`${id}-${opt.id}`}>
+            <FieldOption
+                value={opt.value}
+                id={opt.id}
+                className={optionClassName}
+            >
+                {opt.label}
+            </FieldOption>
+        </label>
+    ));
     return (
-        <div className={`form-field field-${field.type}`}>
-            <label htmlFor={field.id} className="label">
-                {field.label}
-            </label>
-
+        <div className={`form-field field-${type}`}>
+            {label ? (
+                <label htmlFor={id} className="label">
+                    {label}
+                </label>
+            ) : null}
             <Field
-                type={field.type}
-                field={field.name}
-                id={field.id}
+                type={type}
+                field={name}
+                id={id}
                 className={`input input-${className}`}
+                onChange={onChange && (e => onChange(e.target.value))}
+                {...rest}
             >
                 {options}
             </Field>
@@ -76,9 +79,9 @@ const FormField = ({ field, errors }) => {
 
 class PnwForm extends Component {
     render() {
-        const { fields, onSubmit, errors } = this.props;
+        const { fields, onSubmit, errors, SubmitButton, ...rest } = this.props;
         return (
-            <Form onSubmit={formState => onSubmit(formState)}>
+            <Form onSubmit={formState => onSubmit(formState)} {...rest}>
                 {fields.map(field => (
                     <FormField
                         key={field.id}
@@ -86,11 +89,15 @@ class PnwForm extends Component {
                         errors={errors?.[field.name]}
                     />
                 ))}
-                <div className="form-field">
-                    <button type="submit" className="input input-submit">
-                        Submit
-                    </button>
-                </div>
+                {SubmitButton ? (
+                    <SubmitButton />
+                ) : (
+                    <div className="form-field">
+                        <button type="submit" className="input input-submit">
+                            Submit
+                        </button>
+                    </div>
+                )}
             </Form>
         );
     }

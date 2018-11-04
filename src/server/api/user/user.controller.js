@@ -55,10 +55,10 @@ const UserController = function() {
         });
     };
 
-    this.findAll = async queryParams => {
+    this.findAll = async ({ filter, ...queryParams }) => {
         logger.debug('UserController | findAll');
         return {
-            data: [...(await User.findAll(null, null, queryParams))]
+            data: [...(await User.findAll(filter, null, queryParams))]
         };
     };
 

@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import { subscribe } from 'react-contextual';
 import AuthModel from './../../../../resources/models/AuthModel.js';
 import ContactRequestList from './../../../contact/ContactRequestList/ContactRequestList.jsx';
+import Searchbar from './Searchbar/Searchbar.jsx';
+
 import './PrivateNavbar.sass';
 
 @subscribe(mapStateToProps)
@@ -31,7 +33,7 @@ class PrivateNavbar extends Component {
         const { showRequests } = this.state;
 
         return (
-            <nav styleName="navbar">
+            <nav styleName="navbar" className="bg--secondary">
                 <Link to="/dashboard">Home</Link>
                 <Link to="/" onClick={this.logout}>
                     Logout
@@ -44,6 +46,7 @@ class PrivateNavbar extends Component {
                         {showRequests ? <ContactRequestList /> : null}
                     </>
                 )}
+                <Searchbar />
             </nav>
         );
     }
