@@ -10,7 +10,8 @@ const store = {
         return { authenticated: false };
     },
     setCurrentUser: currentUser => state => ({ currentUser }),
-    setProfile: profile => state => ({ profile })
+    setProfile: profile => state => ({ profile }),
+    setIsOwnProfile: isOwnProfile => state => ({ isOwnProfile })
 };
 
 export default store;

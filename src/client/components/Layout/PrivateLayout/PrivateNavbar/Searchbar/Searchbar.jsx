@@ -14,8 +14,18 @@ class Searchbar extends Component {
                 onChange: value => this.onChange(value)
             }
         ],
-        results: undefined
+        results: undefined,
+        showResults: false
     };
+
+    onBlur() {
+        this.setState({ showResults: false });
+    }
+
+    onFocus() {
+        console.log('focus');
+        this.setState({ showResults: true });
+    }
 
     onSubmit(values) {
         console.log(values);
@@ -34,13 +44,14 @@ class Searchbar extends Component {
     }
 
     render() {
-        const { fields, results } = this.state;
+        const { fields, results, showResults } = this.state;
         const SubmitButton = () => <></>;
         const resultsList = results?.slice(0, 3).map(result => (
             <li key={'searchbarResult' + result.id}>
                 <Link to={`/profile/${result.id}`}>{result.username}</Link>
             </li>
         ));
+
         return (
             <div className="flex-rows">
                 <Form
@@ -49,8 +60,11 @@ class Searchbar extends Component {
                     fields={fields}
                     SubmitButton={SubmitButton}
                     className="flex-columns"
+                    onFocus={() => this.onFocus()}
+                    onBlur={() => this.onBlur()}
                 />
-                {results?.length > 0 && (
+                {showResults &&
+                    results?.length > 0 && (
                     <ul>
                         {resultsList}
                         {results.length > 3 && (

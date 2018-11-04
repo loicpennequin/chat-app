@@ -41,6 +41,10 @@ class Profile extends Component {
     async componentDidUpdate(prevProps, prevState) {
         if (prevState.id !== this.state.id) {
             this.props.setProfile(await UserModel.find(this.state.id));
+            this.props.setIsOwnProfile(
+                parseInt(this.props.match.params.id) ===
+                    this.props.currentUser.id
+            );
         }
     }
 
@@ -69,7 +73,8 @@ function mapStateToProps(store) {
         currentUser: store.currentUser,
         profile: store.profile,
         isOwnProfile: store.isOwnProfile,
-        setProfile: store.setProfile
+        setProfile: store.setProfile,
+        setIsOwnProfile: store.setIsOwnProfile
     };
 }
 
