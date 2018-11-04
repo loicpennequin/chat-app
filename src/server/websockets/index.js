@@ -11,10 +11,10 @@ const websockets = {
         io.on('connection', _socket => {
             socket = _socket;
             // logger.info(`socket connected, socketId : ${socket.id}`);
-
             connexionEvents.on(io, socket);
         });
     },
+    // Maybe not expose io and socket to other modules
     io: () => io,
     socket: () => socket,
     connectionEvents: connexionEvents.emit(io, socket),

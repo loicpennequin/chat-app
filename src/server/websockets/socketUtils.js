@@ -13,9 +13,6 @@ const sockets = {
     emitToAllContacts: (contacts, message, data = () => ({})) => {
         sockets.forEach((_socket, io) => {
             if (_socket.user && contacts.some(c => c.id === _socket.user.id)) {
-                logger.info(
-                    'Websockets | emitting to ' + _socket.user.username
-                );
                 io.to(_socket.id).emit(message, data(_socket));
             }
         });
@@ -23,9 +20,6 @@ const sockets = {
     emitToContact: (contactId, message, data = () => ({})) => {
         sockets.forEach((_socket, io) => {
             if (_socket.user && _socket.user.id === contactId) {
-                logger.info(
-                    'Websockets | emitting to ' + _socket.user.username
-                );
                 io.to(_socket.id).emit(message, data(_socket));
             }
         });

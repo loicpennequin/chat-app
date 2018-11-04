@@ -14,6 +14,7 @@ class PrivateNavbar extends Component {
         };
 
         this.toggleRequests = this.toggleRequests.bind(this);
+        this.logout = this.logout.bind(this);
     }
 
     toggleRequests() {
@@ -32,9 +33,9 @@ class PrivateNavbar extends Component {
         return (
             <nav styleName="navbar">
                 <Link to="/dashboard">Home</Link>
-                <a href="/" onClick={() => this.logout()}>
+                <Link to="/" onClick={this.logout}>
                     Logout
-                </a>
+                </Link>
                 {requests?.length > 0 && (
                     <>
                         <button onClick={this.toggleRequests}>

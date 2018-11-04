@@ -54,7 +54,6 @@ class Layout extends Component {
     }
 
     async updateUser(data) {
-        console.log(data);
         this.props.setCurrentUser(await UserModel.findSelf());
     }
 

@@ -2,15 +2,16 @@ const jwt = require('jsonwebtoken');
 const passport = require('passport');
 
 function AuthController() {
-    const _generateToken = id => jwt.sign(
-        { data: { id }, timestamp: new Date() },
-        process.env.TOKEN_SECRET,
-        { expiresIn: 3600 }
-    );
+    const _generateToken = id =>
+        jwt.sign(
+            { data: { id }, timestamp: new Date() },
+            process.env.TOKEN_SECRET,
+            { expiresIn: 3600 }
+        );
 
     this._generateToken = _generateToken.bind(this);
 
-    this.ensureAuth =  (req, res, next) => {
+    this.ensureAuth = (req, res, next) => {
         passport.authenticate('jwt', { session: false })(req, res, next);
     };
 
@@ -24,11 +25,11 @@ function AuthController() {
         logger.debug('Authservice | logout');
         req.logout();
         req.session.destroy();
-        res.send();
+        res.json({ message: 'OK' });
     };
 
     this.isLoggedIn = (req, res) => {
-        res.json({authenticated: req.isAuthenticated()});
+        res.json({ authenticated: req.isAuthenticated() });
     };
 }
 
