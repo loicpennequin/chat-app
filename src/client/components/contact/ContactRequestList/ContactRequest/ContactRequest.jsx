@@ -1,14 +1,8 @@
 import React from 'react';
-import moment from 'moment';
+import formatDate from './../../../../resources/utils/formatDate.js';
+
 const ContactRequest = ({ request, onAccept, onDecline }) => {
-    const date = moment(request.date).calendar(null, {
-        sameDay: '[Today]',
-        nextDay: '[Tomorrow]',
-        nextWeek: 'dddd',
-        lastDay: '[Yesterday]',
-        lastWeek: '[Last] dddd',
-        sameElse: 'DD/MM/YYYY'
-    });
+    const date = formatDate(reques.date);
 
     return (
         <li>

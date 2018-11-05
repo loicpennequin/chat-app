@@ -11,7 +11,8 @@ const store = {
     },
     setCurrentUser: currentUser => state => ({ currentUser }),
     setProfile: profile => state => ({ profile }),
-    setIsOwnProfile: isOwnProfile => state => ({ isOwnProfile })
+    setIsOwnProfile: isOwnProfile => state => ({ isOwnProfile }),
+    setMessages: messages => state => ({ messages })
 };
 
 export default store;

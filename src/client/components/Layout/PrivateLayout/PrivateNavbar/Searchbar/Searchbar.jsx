@@ -11,6 +11,7 @@ class Searchbar extends Component {
                 id: 'searchbar-username',
                 type: 'text',
                 name: 'username',
+                placeholder: 'search a user...',
                 onChange: value => this.onChange(value)
             }
         ],

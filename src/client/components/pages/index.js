@@ -1,13 +1,17 @@
 import Home, { homeFetch } from './Home/Home.jsx';
 import Login, { loginFetch } from './Login/Login.jsx';
-import Dashboard, { dashboardFetch } from './dashboard/dashboard.jsx';
-import Profile, { profileFetch } from './profile/profile.jsx';
+import Dashboard, { dashboardFetch } from './Dashboard/Dashboard.jsx';
+import Profile, { profileFetch } from './Profile/Profile.jsx';
+import Conversation, {
+    conversationFetch
+} from './Conversation/Conversation.jsx';
 
 const fetchFunctions = {
     home: homeFetch,
     login: loginFetch,
     dashboard: dashboardFetch,
-    profile: profileFetch
+    profile: profileFetch,
+    conversation: conversationFetch
 };
 
 export default {
@@ -15,5 +19,6 @@ export default {
     Home,
     Login,
     Dashboard,
-    Profile
+    Profile,
+    Conversation
 };

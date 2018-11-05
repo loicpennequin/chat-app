@@ -1,6 +1,7 @@
 const socketio = require('socket.io');
 const connexionEvents = require('./connexionEvents.js');
 const contactRequestEvents = require('./contactRequestEvents.js');
+const messageEvents = require('./messageEvents.js');
 
 let io, socket;
 
@@ -18,7 +19,8 @@ const websockets = {
     io: () => io,
     socket: () => socket,
     connectionEvents: connexionEvents.emit(io, socket),
-    contactRequestEvents: contactRequestEvents.emit(io, socket)
+    contactRequestEvents: contactRequestEvents.emit(io, socket),
+    messageEvents: messageEvents.emit(io, socket)
 };
 
 module.exports = websockets;

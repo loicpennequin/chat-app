@@ -1,6 +1,6 @@
 import Pages from './../../components/pages/index.js';
 
-const { Home, Login, Dashboard, Profile, fetchFunctions } = Pages;
+const { Home, Login, Dashboard, Profile, Conversation, fetchFunctions } = Pages;
 const routes = [
     {
         path: '/',
@@ -33,6 +33,14 @@ const routes = [
         dataFetchKey: 'profile',
         authLevel: 'private',
         fetchFn: fetchFunctions.profile
+    },
+    {
+        path: '/messages/:id',
+        exact: true,
+        component: Conversation,
+        dataFetchKey: 'conversation',
+        authLevel: 'private',
+        fetchFn: fetchFunctions.conversation
     }
     // {
     //     path: '/',

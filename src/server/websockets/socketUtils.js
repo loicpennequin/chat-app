@@ -19,7 +19,8 @@ const sockets = {
     },
     emitToContact: (contactId, message, data = () => ({})) => {
         sockets.forEach((_socket, io) => {
-            if (_socket.user && _socket.user.id === contactId) {
+            if (_socket.user && _socket.user.id === parseInt(contactId)) {
+                logger.info(`emitting to ${_socket.user.username}`);
                 io.to(_socket.id).emit(message, data(_socket));
             }
         });
