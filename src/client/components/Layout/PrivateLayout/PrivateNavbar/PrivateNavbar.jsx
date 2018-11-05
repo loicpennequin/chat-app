@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import AuthModel from './../../../../resources/models/AuthModel.js';
 import ContactRequestList from './../../../contact/ContactRequestList/ContactRequestList.jsx';
 import Searchbar from './Searchbar/Searchbar.jsx';
+import ClickOutside from './../../../UI/ClickOutside/ClickOutside.jsx';
 import Notification from './../../../UI/Notification/Notification.js';
 import './PrivateNavbar.sass';
 
@@ -20,7 +21,7 @@ class PrivateNavbar extends Component {
         this.logout = this.logout.bind(this);
     }
 
-    toggleRequests() {
+    async toggleRequests() {
         this.setState(state => ({ showRequests: !state.showRequests }));
     }
 
@@ -42,10 +43,22 @@ class PrivateNavbar extends Component {
                     <FontAwesomeIcon icon="power-off" />
                 </Link>
                 <div styleName="contact-list_wrapper">
-                    <Notification icon="user" onClick={this.toggleRequests} count={requests.length}/>
+                    <Notification
+                        icon="user"
+                        onClick={this.toggleRequests}
+                        count={requests?.length}
+                    />
                     {showRequests && (
                         <div styleName="contact-list">
-                            {requests?.length > 0 ? <ContactRequestList /> : <p>you don&#39;t have any contact request.</p>}
+                            {requests?.length > 0 ? (
+                                <ClickOutside
+                                    component={ContactRequestList}
+                                    onClickOutside={this.toggleRequests}
+                                    onNavigate={this.toggleRequests}
+                                />
+                            ) : (
+                                <p>you don&#39;t have any contact request.</p>
+                            )}
                         </div>
                     )}
                 </div>

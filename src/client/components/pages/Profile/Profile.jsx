@@ -21,7 +21,7 @@ class Profile extends Component {
         this.state = {
             isFriend:
                 !this.props.isOwnProfile &&
-                !this.props.currentUser.contacts.some(
+                !this.props?.currentUser?.contacts.some(
                     c => c.id === this.props.profile.id
                 )
         };

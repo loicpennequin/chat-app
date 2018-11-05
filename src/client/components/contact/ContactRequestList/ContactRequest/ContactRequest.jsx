@@ -5,12 +5,12 @@ import formatDate from './../../../../resources/utils/formatDate.js';
 import Avatar from './../../../UI/Avatar/Avatar.jsx';
 import './contactRequest.sass';
 
-const ContactRequest = ({ request, onAccept, onDecline }) => {
+const ContactRequest = ({ request, onAccept, onDecline, onNavigate }) => {
     const date = formatDate(request.date);
 
     return (
         <li styleName="wrapper">
-            <Link to={`/profile/${request.id}`} styleName="infos">
+            <Link to={`/profile/${request.id}`} styleName="infos" onClick={() => onNavigate()}>
                 <Avatar user={request} size="md"/>
                 <div styleName="infos_text">
                     <div styleName="username">{request.username}</div>
