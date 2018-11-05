@@ -1,9 +1,13 @@
 import api from './../services/RESTService.js';
+import socket from './../services/ioService.js';
 
 export default class AuthModel {
     static async login(body) {
         try {
             const response = await api.post('/login', body);
+            socket.emit('user logged in', {
+                id: localStorage.getItem('uid')
+            });
             return response;
         } catch (err) {
             console.log(err);
@@ -13,16 +17,16 @@ export default class AuthModel {
 
     static async isLoggedIn() {
         try {
-            await api.get('/isloggedin');
-            return true;
+            return (await api.get('/isloggedin')).authenticated;
         } catch (err) {
             return false;
         }
     }
 
-    static async logout(){
+    static async logout() {
         try {
             const response = await api.get('/logout');
+            socket.emit('user logged out');
             return response;
         } catch (err) {
             console.log(err);

@@ -17,11 +17,9 @@ let init = cfg => {
                 })
                 .unauthorized(async (error, req) => {
                     console.log('401');
-                    cfg?.unauthorized();
-                    if (__IS_BROWSER__) {
-                        localStorage.removeItem('token');
-                        localStorage.removeItem('uid');
-                    }
+                    cfg.unauthorized();
+                    localStorage.removeItem('token');
+                    localStorage.removeItem('uid');
                     throw new Error(error);
                 })
                 .internalError(async (error, req) => {

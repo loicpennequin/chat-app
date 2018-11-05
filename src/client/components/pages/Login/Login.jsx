@@ -2,18 +2,10 @@ import React, { Component } from 'react';
 import { subscribe } from 'react-contextual';
 import LoginForm from './LoginForm/LoginForm.jsx';
 import AuthModel from './../../../resources/models/AuthModel.js';
-import './Login.sass';
 
-const fetchData = params => ({});
-
-export { fetchData };
-
-@subscribe(({ login, setUser }) => ({ login, setUser }))
+@subscribe(mapStateToProps)
 class Login extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {};
-    }
+    state = {};
 
     async login(values) {
         const { error } = await AuthModel.login(values);
@@ -37,5 +29,15 @@ class Login extends Component {
         );
     }
 }
+
+function mapStateToProps(store) {
+    return {
+        login: store.login
+    };
+}
+
+const loginFetch = async () => ({});
+
+export { loginFetch };
 
 export default Login;

@@ -1,54 +1,82 @@
-import Home, {
-    fetchData as HomeFetch
-} from './../../components/pages/Home/Home.jsx';
-import Dashboard, {
-    fetchData as DashboardFetch
-} from './../../components/pages/Dashboard/Dashboard.jsx';
-import Login, {
-    fetchData as LoginFetch
-} from './../../components/pages/Login/Login.jsx';
-import Profile, {
-    fetchData as ProfileFetch
-} from './../../components/pages/Profile/Profile.jsx';
-import Latest, {
-    fetchData as LatestFetch
-} from './../../components/pages/Latest/Latest.jsx';
+import Pages from './../../components/pages/index.js';
+
+const { Home, Login, Dashboard, Profile, Conversation, fetchFunctions } = Pages;
 const routes = [
     {
         path: '/',
         exact: true,
         component: Home,
-        fetchFn: HomeFetch,
-        authLevel: 'public'
-    },
-    {
-        path: '/dashboard',
-        exact: false,
-        component: Dashboard,
-        fetchFn: DashboardFetch,
-        authLevel: 'private'
+        dataFetchKey: 'home',
+        authLevel: 'public',
+        fetchFn: fetchFunctions.home
     },
     {
         path: '/login',
         exact: true,
         component: Login,
-        fetchFn: LoginFetch,
-        authLevel: 'public'
+        dataFetchKey: 'login',
+        authLevel: 'public',
+        fetchFn: fetchFunctions.login
+    },
+    {
+        path: '/dashboard',
+        exact: true,
+        component: Dashboard,
+        dataFetchKey: 'dashboard',
+        authLevel: 'private',
+        fetchFn: fetchFunctions.dashboard
     },
     {
         path: '/profile/:id',
         exact: true,
         component: Profile,
-        fetchFn: ProfileFetch,
-        authLevel: 'private'
+        dataFetchKey: 'profile',
+        authLevel: 'private',
+        fetchFn: fetchFunctions.profile
     },
     {
-        path: '/latest',
+        path: '/messages/:id',
         exact: true,
-        component: Latest,
-        fetchFn: LatestFetch,
-        authLevel: 'private'
+        component: Conversation,
+        dataFetchKey: 'conversation',
+        authLevel: 'private',
+        fetchFn: fetchFunctions.conversation
     }
+    // {
+    //     path: '/',
+    //     exact: true,
+    //     component: Home,
+    //     fetchFn: HomeFetch,
+    //     authLevel: 'public'
+    // },
+    // {
+    //     path: '/dashboard',
+    //     exact: false,
+    //     component: Dashboard,
+    //     fetchFn: DashboardFetch,
+    //     authLevel: 'private'
+    // },
+    // {
+    //     path: '/login',
+    //     exact: true,
+    //     component: Login,
+    //     fetchFn: LoginFetch,
+    //     authLevel: 'public'
+    // },
+    // {
+    //     path: '/profile/:id',
+    //     exact: true,
+    //     component: Profile,
+    //     fetchFn: ProfileFetch,
+    //     authLevel: 'private'
+    // },
+    // {
+    //     path: '/latest',
+    //     exact: true,
+    //     component: Latest,
+    //     fetchFn: LatestFetch,
+    //     authLevel: 'private'
+    // }
 ];
 
 export default routes;

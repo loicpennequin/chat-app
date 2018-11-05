@@ -24,4 +24,8 @@ export default class UserModel {
             return err;
         }
     }
+
+    static async findSelf() {
+        return await UserModel.find(localStorage.getItem('uid'));
+    }
 }

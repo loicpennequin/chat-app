@@ -3,15 +3,16 @@ import { Route, Redirect } from 'react-router-dom';
 import { subscribe } from 'react-contextual';
 import Prefetcher from './../Prefetcher/Prefetcher.jsx';
 
-const LoggedOutRoute = ({ component: Component, ...rest }) => (
+const LoggedOutRoute = ({ component: Component, fetchFn, needPrefetch, authenticated, ...rest }) => (
     <Route
         {...rest}
         render={props =>
-            !rest.authenticated ? (
+            !authenticated ? (
                 <Prefetcher
                     {...props}
+                    fetchFn={fetchFn}
                     component={Component}
-                    fetchFn={rest.fetchFn}
+                    needPrefetch={needPrefetch}
                 />
             ) : (
                 <Redirect
@@ -25,4 +26,10 @@ const LoggedOutRoute = ({ component: Component, ...rest }) => (
     />
 );
 
-export default subscribe()(LoggedOutRoute);
+function mapStateToProps(store){
+    return {
+        authenticated: store.authenticated
+    };
+}
+
+export default subscribe(mapStateToProps)(LoggedOutRoute);

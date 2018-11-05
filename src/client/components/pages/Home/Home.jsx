@@ -1,15 +1,11 @@
 import React, { Component } from 'react';
 import { subscribe } from 'react-contextual';
-import './Home.sass';
+import { Link } from 'react-router-dom';
 import RegisterForm from './RegisterForm/RegisterForm.jsx';
 import UserModel from './../../../resources/models/UserModel.js';
-import { Link } from 'react-router-dom';
+import './Home.sass';
 
-const fetchData = params => ({});
-
-export { fetchData };
-
-@subscribe(store => ({}))
+@subscribe(mapStateToProps)
 class Home extends Component {
     constructor(props) {
         super(props);
@@ -30,13 +26,17 @@ class Home extends Component {
 
     render() {
         const { registerErrors, registerSuccess } = this.state;
+        const successMessage = (
+            <p style={{ color: 'green' }}>
+                Registration successful. You can sign in
+                <Link to="/login">Here</Link>
+            </p>
+        );
+
         return (
             <>
                 {registerSuccess ? (
-                    <p style={{ color: 'green' }}>
-                        Registration successful. You can sign in{' '}
-                        <Link to="/login">Here</Link>
-                    </p>
+                    successMessage
                 ) : (
                     <>
                         <RegisterForm
@@ -54,5 +54,15 @@ class Home extends Component {
         );
     }
 }
+
+function mapStateToProps(store) {
+    return {
+        users: store.users
+    };
+}
+
+const homeFetch = async () => ({});
+
+export { homeFetch };
 
 export default Home;

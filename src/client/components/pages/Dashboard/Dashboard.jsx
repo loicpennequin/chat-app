@@ -1,16 +1,9 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import { subscribe } from 'react-contextual';
 import UserModel from './../../../resources/models/UserModel.js';
-import './Dashboard.sass';
+import { Link } from 'react-router-dom';
 
-const fetchData = async params => {
-    return { currentUser: await UserModel.find(params.user_id) };
-};
-
-export { fetchData };
-
-@subscribe(({ currentUser }) => ({ currentUser }))
+@subscribe(mapStateToProps)
 class Dashboard extends Component {
     constructor(props) {
         super(props);
@@ -20,24 +13,25 @@ class Dashboard extends Component {
         const { currentUser } = this.props;
         return currentUser ? (
             <>
-                <h2>Hello {currentUser?.username} ! this is your dashboard.</h2>
-                <p>Here you will be able to :</p>
-                <ul>
-                    <li>
-                        <Link to="/latest">See the latest members,</Link>
-                    </li>
-                    <li>
-                        <Link to={`/profile/${currentUser.id}`}>
-                            see and edit your profile,
-                        </Link>
-                    </li>
-                    <li>and configure the app to your likings</li>
-                </ul>
+                <h1>Hello {currentUser?.username} ! this is your dashboard.</h1>
+                <Link to={`/profile/${currentUser.id}`}>Your profile</Link>
             </>
         ) : (
             <div>Dashboard Loading...</div>
         );
     }
 }
+
+function mapStateToProps(store) {
+    return {
+        currentUser: store.currentUser
+    };
+}
+
+const dashboardFetch = async params => ({
+    currentUser: await UserModel.find(params.user_id)
+});
+
+export { dashboardFetch };
 
 export default Dashboard;

@@ -3,20 +3,21 @@ import { Route, Redirect } from 'react-router-dom';
 import { subscribe } from 'react-contextual';
 import Prefetcher from './../Prefetcher/Prefetcher.jsx';
 
-const PrivateRoute = ({ component: Component, ...rest }) => (
+const PrivateRoute = ({ component: Component, fetchFn, needPrefetch, authenticated, ...rest }) => (
     <Route
         {...rest}
         render={props =>
-            rest.authenticated ? (
+            authenticated ? (
                 <Prefetcher
                     {...props}
+                    fetchFn={fetchFn}
                     component={Component}
-                    fetchFn={rest.fetchFn}
+                    needPrefetch={needPrefetch}
                 />
             ) : (
                 <Redirect
                     to={{
-                        pathname: '/',
+                        pathname: '/login',
                         state: { from: props.location }
                     }}
                 />
@@ -24,4 +25,11 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
         }
     />
 );
-export default subscribe()(PrivateRoute);
+
+function mapStateToProps(store){
+    return {
+        authenticated: store.authenticated
+    };
+};
+
+export default subscribe(mapStateToProps)(PrivateRoute);

@@ -9,10 +9,10 @@
         "React": true
     },
     "plugins": ["react"],
-    "settings":{
-            "react": {
-                "version": "16.4"
-            }
+    "settings": {
+        "react": {
+            "version": "16.4"
+        }
     },
     "parserOptions": {
         "ecmaVersion": 2018,
@@ -39,6 +39,7 @@
         "strict": [2, "never"],
         "react/jsx-uses-react": 2,
         "react/jsx-uses-vars": 2,
+        "react/display-name": 0,
         "react/prop-types": 0,
         "react/react-in-jsx-scope": 2,
         "no-invalid-regexp": 2,
@@ -60,7 +61,7 @@
         "no-console": 0,
         "no-constant-condition": 0,
         "jsx-quotes": ["warn", "prefer-double"],
-        "indent": ["error", 4, { "SwitchCase": 1}],
+        "indent": ["error", 4, { "SwitchCase": 1 }],
         "quotes": [
             "error",
             "single",

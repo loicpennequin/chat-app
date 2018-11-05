@@ -1,4 +1,5 @@
 import routes from './../services/routesService.js';
+
 const store = {
     routes,
     authenticated: false,
@@ -8,7 +9,10 @@ const store = {
         localStorage.removeItem('uid');
         return { authenticated: false };
     },
-    setUser: currentUser => state => ({ currentUser })
+    setCurrentUser: currentUser => state => ({ currentUser }),
+    setProfile: profile => state => ({ profile }),
+    setIsOwnProfile: isOwnProfile => state => ({ isOwnProfile }),
+    setMessages: messages => state => ({ messages })
 };
 
 export default store;

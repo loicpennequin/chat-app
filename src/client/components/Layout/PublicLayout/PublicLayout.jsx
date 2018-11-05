@@ -1,24 +1,11 @@
-import React, { Component } from 'react';
-import { subscribe } from 'react-contextual';
-import Routes from './../../Routes/Routes.jsx';
+import React from 'react';
 import PublicNavbar from './PublicNavbar/PublicNavbar.jsx';
 
-@subscribe(store => ({
-    routes: store.routes
-}))
-class PublicLayout extends Component {
-    render() {
-        return (
-            <>
-                <PublicNavbar />
-                <Routes
-                    routes={this.props.routes.filter(
-                        route => route.authLevel === 'public'
-                    )}
-                />
-            </>
-        );
-    }
-}
+const PublicLayout = ({children}) => (
+    <>
+        <PublicNavbar />
+        {children}
+    </>
+);
 
 export default PublicLayout;

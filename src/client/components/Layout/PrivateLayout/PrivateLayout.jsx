@@ -1,28 +1,14 @@
-import React, { Component } from 'react';
-import { subscribe } from 'react-contextual';
-import Routes from './../../Routes/Routes.jsx';
+import React from 'react';
 import PrivateNavbar from './PrivateNavbar/PrivateNavbar.jsx';
 import ContactList from './ContactList/ContactList.jsx';
-import './PrivateLayout.sass';
+import './PrivateLAyout.sass';
 
-@subscribe(store => ({
-    routes: store.routes
-}))
-class PrivateLayout extends Component {
-    render() {
-        return (
-            <div styleName="layout">
-                <PrivateNavbar />
-                <ContactList />
-                <main>
-                    <Routes
-                        routes={this.props.routes.filter(
-                            route => route.authLevel === 'private'
-                        )}
-                    />
-                </main>
-            </div>
-        );
-    }
-}
+const PrivateLayout = ({ children }) => (
+    <div styleName="layout">
+        <PrivateNavbar />
+        <ContactList />
+        <main>{children}</main>
+    </div>
+);
+
 export default PrivateLayout;

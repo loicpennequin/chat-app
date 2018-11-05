@@ -1,24 +1,14 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import Loader from './../../Loader/PageLoader.jsx';
+import PageLoader from './../../loaders/PageLoader.jsx';
 import { subscribe } from 'react-contextual';
 import { withRouter } from 'react-router-dom';
 
-@subscribe(store => ({ setState: store.setState }))
+@withRouter
+@subscribe(mapStateToProps)
 class Prefetcher extends Component {
-    static propTypes = {
-        setState: PropTypes.func.isRequired,
-        fetchFn: PropTypes.func.isRequired,
-        match: PropTypes.object.isRequired,
-        component: PropTypes.func.isRequired
+    state = {
+        fetching: __IS_BROWSER__ && this.props.needPrefetch
     };
-
-    constructor(props) {
-        super(props);
-        this.state = {
-            fetching: __IS_BROWSER__ && !window.__INITIAL_DATA__
-        };
-    }
 
     componentDidMount() {
         this.fetchInitialData();
@@ -26,7 +16,7 @@ class Prefetcher extends Component {
     }
 
     async fetchInitialData() {
-        if (__IS_BROWSER__) {
+        if (__IS_BROWSER__ && this.props.needPrefetch) {
             const data = await this.props.fetchFn({
                 url: this.props.match.params,
                 user_id: localStorage.getItem('uid')
@@ -41,8 +31,14 @@ class Prefetcher extends Component {
     render() {
         const { component: Component } = this.props;
         const { fetching } = this.state;
-        return fetching ? <Loader /> : <Component />;
+        return fetching ? <PageLoader /> : <Component />;
     }
 }
 
-export default withRouter(Prefetcher);
+function mapStateToProps(store) {
+    return {
+        setState: store.setState
+    };
+}
+
+export default Prefetcher;

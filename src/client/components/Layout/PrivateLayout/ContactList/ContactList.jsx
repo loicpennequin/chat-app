@@ -1,9 +1,24 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import { subscribe } from 'react-contextual';
+import ContactListLoader from './../../../loaders/ContactListLoader.jsx';
 
-const Contact = ({contact}) => <li>{contact.username} | {contact.email}</li>;
+const Contact = ({ contact }) => (
+    <li>
+        <Link to={`/messages/${contact.id}`}>{contact.username}|</Link>
+        <Link to={`/profile/${contact.id}`}>See profile</Link>
+    </li>
+);
 
-@subscribe( ({ currentUser}) => ({currentUser}) )
+const ContactSection = ({ contacts }) => (
+    <ul>
+        {contacts.map(contact => (
+            <Contact key={contact.id} contact={contact} />
+        ))}
+    </ul>
+);
+
+@subscribe(mapStateToProps)
 class ContactList extends Component {
     constructor(props) {
         super(props);
@@ -12,23 +27,42 @@ class ContactList extends Component {
     render() {
         const { currentUser } = this.props;
 
+        const onlineContacts = currentUser?.contacts?.filter(
+            c => c.is_online === 1
+        );
+        const offlineContacts = currentUser?.contacts?.filter(
+            c => c.is_online === 0
+        );
+
+        const onlineList = <ContactSection contacts={onlineContacts} />;
+        const offlineList = <ContactSection contacts={offlineContacts} />;
+
         const contacts = !currentUser?.contacts ? (
-            <div>loading contact list...</div>
+            <ContactListLoader />
         ) : !currentUser.contacts.length > 0 ? (
             <div>You dont have any contact yet.</div>
         ) : (
-            <ul>
-                {currentUser.contacts.map(contact => <Contact key={contact.id} contact={contact} />)}
-            </ul>
+            <>
+                <h3>Online({onlineContacts.length})</h3>
+                {onlineList}
+                <h3>Offline({offlineContacts.length})</h3>
+                {offlineList}
+            </>
         );
 
         return (
             <aside>
-                <h3>contacts</h3>
+                <h2>contacts</h2>
                 {contacts}
             </aside>
         );
     }
+}
+
+function mapStateToProps(store) {
+    return {
+        currentUser: store.currentUser
+    };
 }
 
 export default ContactList;

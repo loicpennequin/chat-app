@@ -1,29 +1,27 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { Switch, Redirect } from 'react-router-dom';
 import { subscribe } from 'react-contextual';
 import PrivateRoute from './PrivateRoute/PrivateRoute.jsx';
 import LoggedOutRoute from './LoggedOutRoute/LoggedOutRoute.jsx';
 
-@subscribe(store => ({ authenticated: store.authenticated }))
+@subscribe(mapStateToProps)
 class Routes extends Component {
-    static propTypes = {
-        routes: PropTypes.arrayOf(PropTypes.object).isRequired
-    };
     render() {
-        const { authenticated } = this.props;
+        const { authenticated, routes, needPrefetch } = this.props;
+
+        const generateRoute = route =>
+            route.authLevel === 'public' ? LoggedOutRoute : PrivateRoute;
+
         return (
             <Switch>
-                {this.props.routes.map(({ component: Component, ...route }) => {
-                    const GeneratedRoute =
-                        route.authLevel === 'public'
-                            ? LoggedOutRoute
-                            : PrivateRoute;
+                {routes.map(({ component: Component, ...route }) => {
+                    const GeneratedRoute = generateRoute(route);
                     return (
                         <GeneratedRoute
                             key={'route-' + route.path}
                             component={Component}
                             {...route}
+                            needPrefetch={needPrefetch}
                         />
                     );
                 })}
@@ -31,6 +29,12 @@ class Routes extends Component {
             </Switch>
         );
     }
+}
+
+function mapStateToProps(store) {
+    return {
+        authenticated: store.authenticated
+    };
 }
 
 export default Routes;
