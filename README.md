@@ -9,5 +9,6 @@
 ## Setup
 
 -   `npm run setup:init`
+-   wait for the promp in command lne to fill in your mySQL credentials
 -   Open your browser of choice and go to http://localhost:8000
--   ...that's it man.
+-   ...that's it.
