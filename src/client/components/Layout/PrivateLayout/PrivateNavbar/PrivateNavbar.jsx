@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { subscribe } from 'react-contextual';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import AuthModel from './../../../../resources/models/AuthModel.js';
 import ContactRequestList from './../../../contact/ContactRequestList/ContactRequestList.jsx';
 import Searchbar from './Searchbar/Searchbar.jsx';
-
+import Notification from './../../../UI/Notification/Notification.js';
 import './PrivateNavbar.sass';
 
 @subscribe(mapStateToProps)
@@ -33,19 +34,21 @@ class PrivateNavbar extends Component {
         const { showRequests } = this.state;
 
         return (
-            <nav styleName="navbar" className="bg--secondary">
-                <Link to="/dashboard">Home</Link>
-                <Link to="/" onClick={this.logout}>
-                    Logout
+            <nav styleName="navbar">
+                <Link to="/dashboard">
+                    <FontAwesomeIcon icon="home" />
                 </Link>
-                {requests?.length > 0 && (
-                    <>
-                        <button onClick={this.toggleRequests}>
-                            {requests?.length} new contact requests
-                        </button>
-                        {showRequests ? <ContactRequestList /> : null}
-                    </>
-                )}
+                <Link to="/" onClick={this.logout}>
+                    <FontAwesomeIcon icon="power-off" />
+                </Link>
+                <div styleName="contact-list_wrapper">
+                    <Notification icon="user" onClick={this.toggleRequests} count={requests.length}/>
+                    {showRequests && (
+                        <div styleName="contact-list">
+                            {requests?.length > 0 ? <ContactRequestList /> : <p>you don&#39;t have any contact request.</p>}
+                        </div>
+                    )}
+                </div>
                 <Searchbar />
             </nav>
         );
@@ -58,5 +61,4 @@ function mapStateToProps(store) {
         currentUser: store.currentUser
     };
 }
-
 export default PrivateNavbar;

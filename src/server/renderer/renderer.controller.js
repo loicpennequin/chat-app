@@ -17,6 +17,7 @@ const getInitialData = async (req, res, routes) => {
             Object.assign(acc, { ...current })
         )
     };
+    
     return initialData;
 };
 
@@ -38,6 +39,11 @@ module.exports = async (req, res) => {
             !req.isAuthenticated()
         ) {
             res.redirect('/login');
+        } else if (
+            routeMatches.some(route => route.authLevel === 'public') &&
+            req.isAuthenticated()
+        ) {
+            res.redirect('/dashboard');
         } else {
             const initialData = await getInitialData(req, res, routeMatches);
 

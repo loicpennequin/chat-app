@@ -20,11 +20,12 @@ class Searchbar extends Component {
     };
 
     onBlur() {
-        this.setState({ showResults: false });
+        setTimeout( () => {
+            this.setState({ showResults: false });
+        },200);
     }
 
     onFocus() {
-        console.log('focus');
         this.setState({ showResults: true });
     }
 

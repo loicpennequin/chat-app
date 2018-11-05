@@ -1,3 +1,30 @@
 .navbar
     grid-area: navbar
     display: flex
+    padding: $spacing-xs
+    font-size: $text-md
+    background-color: $color-gray-5
+    box-shadow: 0 3px 6px transparentize($color-black, 0.8)
+
+.contact-list_wrapper
+    position: relative
+
+.contact-list
+    --list-spacing: 10px
+    padding: $spacing-xs
+    position: absolute
+    top: calc(100% + var(--list-spacing))
+    width: 250px
+    background-color: $color-white
+    box-shadow: 0 3px 6px 2px transparentize($color-black, 0.8)
+    font-size: $text-xs
+    &:after
+        content: ''
+        position: absolute
+        top: calc((var(--list-spacing) / 2) * -1 )
+        left: 2px
+        width: 30px
+        height: var(--list-spacing)
+        -webkit-clip-path: polygon(50% 0%, 0% 100%, 100% 100%)
+        clip-path: polygon(50% 0%, 0% 100%, 100% 100%)
+        background-color: $color-white
