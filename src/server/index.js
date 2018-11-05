@@ -14,7 +14,6 @@
     /*  =============================================================================
         Globals
         ============================================================================= */
-    global.fetch = require('node-fetch');
     global.logger = require('./logger');
     require('dotenv').config({
         path: path.resolve(process.cwd(), 'config/.env')
