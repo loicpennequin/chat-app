@@ -41,26 +41,29 @@ class PrivateNavbar extends Component {
                         <FontAwesomeIcon icon="home" />
                     </Link>
                     <Searchbar />
-                    <div styleName="contact-list_wrapper">
-                        <Notification
-                            styleName="navbar_icon"
-                            icon="user"
-                            onClick={this.toggleRequests}
-                            count={requests?.length}
-                        />
-                        {showRequests && (
-                            <div styleName="contact-list">
-                                <ClickOutside
-                                    component={ContactRequestList}
-                                    onClickOutside={this.toggleRequests}
-                                    onNavigate={this.toggleRequests}
-                                />
-                            </div>
-                        )}
+                    <div styleName="action-bar">
+                        <FontAwesomeIcon icon="comment" styleName="navbar_icon"/>
+                        <div styleName="contact-list_wrapper">
+                            <Notification
+                                styleName="navbar_icon"
+                                icon="user"
+                                onClick={this.toggleRequests}
+                                count={requests?.length}
+                            />
+                            {showRequests && (
+                                <div styleName="contact-list">
+                                    <ClickOutside
+                                        component={ContactRequestList}
+                                        onClickOutside={this.toggleRequests}
+                                        onNavigate={this.toggleRequests}
+                                    />
+                                </div>
+                            )}
+                        </div>
+                        <Link to="/" onClick={this.logout} styleName="navbar_icon">
+                            <FontAwesomeIcon icon="sign-out-alt" />
+                        </Link>
                     </div>
-                    <Link to="/" onClick={this.logout} styleName="navbar_icon">
-                        <FontAwesomeIcon icon="sign-out-alt" />
-                    </Link>
                 </div>
             </nav>
         );

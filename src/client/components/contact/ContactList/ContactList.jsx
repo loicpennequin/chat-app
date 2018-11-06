@@ -13,17 +13,20 @@ const Contact = ({ contact }) => (
         </div>
         <Link to={`/messages/${contact.id}`}>{contact.username}</Link>
         <Link to={`/profile/${contact.id}`} styleName="contact_profile-link">
-            <FontAwesomeIcon icon={['far', 'address-card']} />
+            <FontAwesomeIcon icon={['far', 'address-card']} size="lg" />
         </Link>
     </li>
 );
 
-const ContactSection = ({ contacts }) => (
-    <ul>
-        {contacts.map(contact => (
-            <Contact key={contact.id} contact={contact} />
-        ))}
-    </ul>
+const ContactSection = ({ contacts, type, show }) => (
+    <div styleName="list_wrapper">
+        <ul styleName="list">
+            {show && contacts.map(contact => (
+                <Contact key={contact.id} contact={contact} />
+            ))}
+            {contacts.length === 0 && <li styleName="no-contact">No {type} contact.</li>}
+        </ul>
+    </div>
 );
 
 @subscribe(mapStateToProps)
@@ -55,8 +58,8 @@ class ContactList extends Component {
             c => c.is_online === 0
         );
 
-        const onlineList = <ContactSection contacts={onlineContacts} />;
-        const offlineList = <ContactSection contacts={offlineContacts} />;
+        const onlineList = <ContactSection contacts={onlineContacts} type="online" show={showOnline}/>;
+        const offlineList = <ContactSection contacts={offlineContacts} type="offline" show={showOffline}/>;
 
         const contacts = !currentUser?.contacts ? (
             <ContactListLoader />
@@ -68,26 +71,26 @@ class ContactList extends Component {
                     Online({onlineContacts.length})
                     <span styleName="section_title_toggle">
                         <FontAwesomeIcon
-                            icon={showOnline ? 'chevron-right' : 'chevron-down'}
+                            icon={!showOnline ? 'chevron-right' : 'chevron-down'}
                             onClick={() => this.toggleOnline()}
                             size="sm"
                         />
                     </span>
                 </h3>
-                {showOnline && onlineList}
+                {onlineList}
                 <h3 styleName="section_title">
                     Offline({offlineContacts.length})
                     <span styleName="section_title_toggle">
                         <FontAwesomeIcon
                             icon={
-                                showOffline ? 'chevron-right' : 'chevron-down'
+                                !showOffline ? 'chevron-right' : 'chevron-down'
                             }
                             onClick={() => this.toggleOffline()}
                             size="sm"
                         />
                     </span>
                 </h3>
-                {showOffline && offlineList}
+                {offlineList}
             </>
         );
 

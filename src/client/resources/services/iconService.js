@@ -6,7 +6,8 @@ import {
     faCheck,
     faTimes,
     faChevronDown,
-    faChevronRight
+    faChevronRight,
+    faComment
 } from '@fortawesome/free-solid-svg-icons';
 import { faAddressCard } from '@fortawesome/free-regular-svg-icons';
 
@@ -18,6 +19,7 @@ library.add(
     faTimes,
     faChevronDown,
     faChevronRight,
-    faAddressCard
+    faAddressCard,
+    faComment
 );
 export default library;
