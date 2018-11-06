@@ -1,7 +1,7 @@
 import { library } from '@fortawesome/fontawesome-svg-core';
 import {
     faHome,
-    faPowerOff,
+    faSignOutAlt,
     faUser,
     faCheck,
     faTimes,
@@ -12,7 +12,7 @@ import { faAddressCard } from '@fortawesome/free-regular-svg-icons';
 
 library.add(
     faHome,
-    faPowerOff,
+    faSignOutAlt,
     faUser,
     faCheck,
     faTimes,

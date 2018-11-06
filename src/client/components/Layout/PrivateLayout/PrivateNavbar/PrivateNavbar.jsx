@@ -59,7 +59,7 @@ class PrivateNavbar extends Component {
                         )}
                     </div>
                     <Link to="/" onClick={this.logout} styleName="navbar_icon">
-                        <FontAwesomeIcon icon="power-off" />
+                        <FontAwesomeIcon icon="sign-out-alt" />
                     </Link>
                 </div>
             </nav>
