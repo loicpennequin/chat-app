@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import './MessageSender.sass';
 
 class MessageSender extends Component {
     constructor(props) {
@@ -20,13 +21,14 @@ class MessageSender extends Component {
     }
     render() {
         return (
-            <form onSubmit={e => this.onSubmit(e)}>
+            <form onSubmit={e => this.onSubmit(e)} styleName="wrapper">
                 <input
                     type="text"
                     value={this.state.message}
                     onChange={e => this.onChange(e)}
+                    styleName="input"
                 />
-                <input type="submit" value="send" />
+                <input type="submit" value="send" styleName="submit" />
             </form>
         );
     }

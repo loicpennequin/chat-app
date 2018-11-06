@@ -5,6 +5,8 @@ import UserModel from './../../../resources/models/UserModel.js';
 import MessageModel from './../../../resources/models/MessageModel.js';
 import MessageSender from './MessageSender/MessageSender.jsx';
 import socket from './../../../resources/services/ioService.js';
+import Avatar from './../../UI/Avatar/Avatar.jsx';
+import './Conversation.sass';
 
 @withRouter
 @subscribe(mapStateToProps)
@@ -41,7 +43,6 @@ class Conversation extends Component {
 
     async componentDidUpdate(prevProps, prevState) {
         if (prevState.id !== this.state.id) {
-            console.log(this.state.id);
             this.props.setMessages(
                 await MessageModel.findByUser(this.state.id)
             );
@@ -59,15 +60,24 @@ class Conversation extends Component {
 
     render() {
         return (
-            <>
-                {this.props?.messages?.map(message => (
-                    <div key={message.id}>
-                        <p>{message.sender.username}</p>
-                        <small>{message.content}</small>
-                    </div>
-                ))}
+            <ul styleName="wrapper" className="container">
+                {this.props?.messages?.map(message => {
+                    const isSelf =
+                        message.sender.id === this.props.currentUser.id;
+                    return (
+                        <li
+                            styleName={`message ${isSelf ? 'self' : ''}`}
+                            key={message.id}
+                        >
+                            <Avatar user={message.sender} size="lg" />
+                            <div styleName="message_content">
+                                {message.content}
+                            </div>
+                        </li>
+                    );
+                })}
                 <MessageSender onSubmit={message => this.onSubmit(message)} />
-            </>
+            </ul>
         );
     }
 }
@@ -86,5 +96,4 @@ const conversationFetch = async params => ({
 });
 
 export { conversationFetch };
-
 export default Conversation;

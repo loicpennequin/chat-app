@@ -1,0 +1,29 @@
+.wrapper
+    display: flex
+    flex-direction: column
+    padding-top: $spacing-md
+
+.message
+    align-self: flex-start
+    display: flex
+    flex-direction: row
+    margin-bottom: $spacing-sm
+    &.self
+        align-self: flex-end
+        flex-direction: row-reverse
+        .message_content
+            background: linear-gradient(130DEG, $color-secondary, $color-secondary-dark)
+            color: $color-white
+
+.message_avatar
+    align-self: flex-end
+
+
+.message_content
+    background: $color-white
+    padding: $spacing-sm $spacing-md
+    border-radius: $spacing-sm
+    // flex-grow: 1
+    align-self: flex-start
+    margin: 0 $spacing-sm
+    max-width: 55ch
