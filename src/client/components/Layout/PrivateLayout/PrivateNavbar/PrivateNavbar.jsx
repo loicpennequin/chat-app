@@ -50,17 +50,11 @@ class PrivateNavbar extends Component {
                         />
                         {showRequests && (
                             <div styleName="contact-list">
-                                {requests?.length > 0 ? (
-                                    <ClickOutside
-                                        component={ContactRequestList}
-                                        onClickOutside={this.toggleRequests}
-                                        onNavigate={this.toggleRequests}
-                                    />
-                                ) : (
-                                    <p>
-                                        you don&#39;t have any contact request.
-                                    </p>
-                                )}
+                                <ClickOutside
+                                    component={ContactRequestList}
+                                    onClickOutside={this.toggleRequests}
+                                    onNavigate={this.toggleRequests}
+                                />
                             </div>
                         )}
                     </div>

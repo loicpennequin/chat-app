@@ -1,11 +1,13 @@
 import React from 'react';
 import PrivateNavbar from './PrivateNavbar/PrivateNavbar.jsx';
-import ContactList from './ContactList/ContactList.jsx';
-import './PrivateLAyout.sass';
+import ContactList from './../../contact/ContactList/ContactList.jsx';
+import './PrivateLayout.sass';
 
 const PrivateLayout = ({ children }) => (
     <div styleName="layout">
-        <PrivateNavbar />
+        <div style={{ gridArea: 'navbar' }}>
+            <PrivateNavbar />
+        </div>
         <ContactList />
         <main>{children}</main>
     </div>

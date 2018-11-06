@@ -26,15 +26,19 @@ class ContactRequestList extends Component {
         const { recieved } = this.props?.currentUser?.contactRequests;
         return (
             <ul ref={this.props.domRef}>
-                {recieved?.map(request => (
-                    <ContactRequest
-                        key={request.id}
-                        request={request}
-                        onAccept={this.accept}
-                        onDecline={this.decline}
-                        onNavigate={() => this.props.onNavigate()}
-                    />
-                ))}
+                {recieved && recieved.length > 0 ? (
+                    recieved?.map(request => (
+                        <ContactRequest
+                            key={request.id}
+                            request={request}
+                            onAccept={this.accept}
+                            onDecline={this.decline}
+                            onNavigate={() => this.props.onNavigate()}
+                        />
+                    ))
+                ) : (
+                    <p>you don&#39;t have any contact request.</p>
+                )}
             </ul>
         );
     }
