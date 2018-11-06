@@ -25,7 +25,6 @@ class Conversation extends Component {
     }
     componentDidMount() {
         socket.on('new message', () => {
-            console.log('new message');
             this.updateMessages();
         });
     }
@@ -42,8 +41,9 @@ class Conversation extends Component {
 
     async componentDidUpdate(prevProps, prevState) {
         if (prevState.id !== this.state.id) {
+            console.log(this.state.id);
             this.props.setMessages(
-                await MessageModel.findbyUser(this.state.id)
+                await MessageModel.findByUser(this.state.id)
             );
         }
     }
