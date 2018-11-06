@@ -1,22 +1,58 @@
 import React, { Component } from 'react';
 import { subscribe } from 'react-contextual';
+import { withRouter } from 'react-router-dom';
 import UserModel from './../../../resources/models/UserModel.js';
-import { Link } from 'react-router-dom';
+import DashboardActionCard from './DashboardActionCard/DashboardActionCard.jsx';
 import './Dashboard.sass';
 
+@withRouter
 @subscribe(mapStateToProps)
 class Dashboard extends Component {
     constructor(props) {
         super(props);
+
+        this.navigateToProfile = this.navigateToProfile.bind(this);
+        this.navigateToLatest = this.navigateToLatest.bind(this);
+        this.openSettings = this.openSettings.bind(this);
+    }
+
+    navigateToProfile() {
+        this.props.history.push(`/profile/${localStorage.getItem('uid')}`);
+    }
+
+    navigateToLatest() {
+        alert('WIP');
+    }
+
+    openSettings() {
+        alert('WIP');
     }
 
     render() {
         const { currentUser } = this.props;
         return currentUser ? (
             <div styleName="dashboard">
-                <h1 styleName="heading">Welcome back {currentUser?.username} !</h1>
+                <h1 styleName="heading">
+                    Welcome back {currentUser?.username} !
+                </h1>
                 <h2 styleName="sub-heading">This is your dashboard.</h2>
-                <Link to={`/profile/${currentUser.id}`}>Your profile</Link>
+                <div className="flex-columns">
+                    <DashboardActionCard
+                        icon="chalkboard-teacher"
+                        text="Your Profile"
+                        action={this.navigateToProfile}
+                    />
+                    <DashboardActionCard
+                        icon="users"
+                        text="New members"
+                        action={this.navigateToLatest}
+                    />
+                    <DashboardActionCard
+                        icon="cogs"
+                        text="Settings"
+                        action={this.openSettings}
+                    />
+                </div>
             </div>
         ) : (
             <div>Dashboard Loading...</div>

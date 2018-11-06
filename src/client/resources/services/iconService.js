@@ -7,7 +7,10 @@ import {
     faTimes,
     faChevronDown,
     faChevronRight,
-    faComment
+    faComment,
+    faCogs,
+    faUsers,
+    faChalkboardTeacher
 } from '@fortawesome/free-solid-svg-icons';
 import { faAddressCard } from '@fortawesome/free-regular-svg-icons';
 
@@ -20,6 +23,9 @@ library.add(
     faChevronDown,
     faChevronRight,
     faAddressCard,
-    faComment
+    faComment,
+    faCogs,
+    faUsers,
+    faChalkboardTeacher
 );
 export default library;

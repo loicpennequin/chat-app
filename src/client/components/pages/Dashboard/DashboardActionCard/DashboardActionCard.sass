@@ -1,0 +1,38 @@
+.action-card
+    position: relative
+    justify-content: center
+    align-items: center
+    flex-direction: column
+    display: flex
+    color: $color-white
+    overflow: hidden
+    margin: $spacing-md
+    background: none
+    min-width: 150px
+    cursor: pointer
+    padding: $spacing-lg
+    border: solid 2px $color-white
+    border-radius: $spacing-sm
+    &::after
+        content: ''
+        position: absolute
+        top: 0
+        left: 0
+        width: 100%
+        height: 100%
+        background: radial-gradient(circle at 100% 0%, $color-secondary, rgba(0,0,0,0) 65%)
+        opacity: 0
+        pointer-events: none
+        transform: scale(0)
+        transform-origin: top right
+        transition: all 0.3s
+    &:hover::after
+        opacity: 0.5
+        transform: none
+
+.icon
+    filter: drop-shadow(0 2px 4px $color-black)
+    margin-bottom: $spacing-xs
+
+.text
+    font-size: $text-lg
