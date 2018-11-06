@@ -36,33 +36,38 @@ class PrivateNavbar extends Component {
 
         return (
             <nav styleName="navbar">
-                <Link to="/dashboard">
-                    <FontAwesomeIcon icon="home" />
-                </Link>
-                <Link to="/" onClick={this.logout}>
-                    <FontAwesomeIcon icon="power-off" />
-                </Link>
-                <div styleName="contact-list_wrapper">
-                    <Notification
-                        icon="user"
-                        onClick={this.toggleRequests}
-                        count={requests?.length}
-                    />
-                    {showRequests && (
-                        <div styleName="contact-list">
-                            {requests?.length > 0 ? (
-                                <ClickOutside
-                                    component={ContactRequestList}
-                                    onClickOutside={this.toggleRequests}
-                                    onNavigate={this.toggleRequests}
-                                />
-                            ) : (
-                                <p>you don&#39;t have any contact request.</p>
-                            )}
-                        </div>
-                    )}
+                <div styleName="navbar_inner">
+                    <Link to="/dashboard" styleName="navbar_icon">
+                        <FontAwesomeIcon icon="home" />
+                    </Link>
+                    <Searchbar />
+                    <div styleName="contact-list_wrapper">
+                        <Notification
+                            styleName="navbar_icon"
+                            icon="user"
+                            onClick={this.toggleRequests}
+                            count={requests?.length}
+                        />
+                        {showRequests && (
+                            <div styleName="contact-list">
+                                {requests?.length > 0 ? (
+                                    <ClickOutside
+                                        component={ContactRequestList}
+                                        onClickOutside={this.toggleRequests}
+                                        onNavigate={this.toggleRequests}
+                                    />
+                                ) : (
+                                    <p>
+                                        you don&#39;t have any contact request.
+                                    </p>
+                                )}
+                            </div>
+                        )}
+                    </div>
+                    <Link to="/" onClick={this.logout} styleName="navbar_icon">
+                        <FontAwesomeIcon icon="power-off" />
+                    </Link>
                 </div>
-                <Searchbar />
             </nav>
         );
     }
@@ -74,4 +79,5 @@ function mapStateToProps(store) {
         currentUser: store.currentUser
     };
 }
+
 export default PrivateNavbar;

@@ -1,13 +1,29 @@
 .navbar
     grid-area: navbar
-    display: flex
     padding: $spacing-xs
     font-size: $text-md
     background-color: $color-gray-5
     box-shadow: 0 3px 6px transparentize($color-black, 0.8)
 
+.navbar_inner
+    display: flex
+    align-items: center
+    width: $container-max-width
+    margin: 0 auto
+    +hd-only
+        width: $container-max-width-hd
+
+.navbar_icon
+    color: $color-primary
+    margin: 0 $spacing-xs
+    &:focus
+        outline: none
+        color: $color-primary-lighter
+
+
 .contact-list_wrapper
     position: relative
+    margin-left: auto
 
 .contact-list
     --list-spacing: 10px

@@ -2,10 +2,14 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import './Notification.sass';
 
-const Notification = ({count, ...props}) => (
+const Notification = ({ count, ...props }) => (
     <span className="fa-layers fa-fw" styleName="notification">
         <FontAwesomeIcon {...props} />
-        <span className="fa-layers-counter" styleName="counter">{count}</span>
+        {count > 0 && (
+            <span className="fa-layers-counter" styleName="counter">
+                {count}
+            </span>
+        )}
     </span>
 );
 

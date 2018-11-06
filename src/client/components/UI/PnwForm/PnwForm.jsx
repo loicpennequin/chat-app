@@ -12,7 +12,6 @@ import {
 
 const FormField = ({ field, errors }) => {
     let { type, id, label, name, options, onChange, ...rest } = field;
-
     let Field;
     let FieldOption;
     let className;
@@ -66,9 +65,9 @@ const FormField = ({ field, errors }) => {
                 type={type}
                 field={name}
                 id={id}
-                className={`input input-${className}`}
-                onChange={onChange && (e => onChange(e.target.value))}
                 {...rest}
+                className={`input input-${className} ${rest.className}`}
+                onChange={onChange && (e => onChange(e.target.value))}
             >
                 {options}
             </Field>

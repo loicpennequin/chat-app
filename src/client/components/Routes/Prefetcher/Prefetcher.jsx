@@ -6,13 +6,21 @@ import { withRouter } from 'react-router-dom';
 @withRouter
 @subscribe(mapStateToProps)
 class Prefetcher extends Component {
-    state = {
-        fetching: __IS_BROWSER__ && this.props.needPrefetch
-    };
+    constructor(props) {
+        super(props);
+        this.state = {
+            fetching: __IS_BROWSER__ && this.props.needPrefetch
+        };
+    }
 
     componentDidMount() {
+        this.mounted = true; // @FIXME fix this crappy antipattern
         this.fetchInitialData();
         delete window.__INITIAL_DATA;
+    }
+
+    componentWillUnmount() {
+        this.mounted = false;
     }
 
     async fetchInitialData() {
@@ -23,9 +31,11 @@ class Prefetcher extends Component {
             });
             await this.props.setState(data);
         }
-        this.setState({
-            fetching: false
-        });
+        if (this.mounted) {
+            this.setState({
+                fetching: false
+            });
+        }
     }
 
     render() {

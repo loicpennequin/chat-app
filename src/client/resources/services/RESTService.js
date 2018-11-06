@@ -16,8 +16,8 @@ let init = cfg => {
                     return { error: 404 };
                 })
                 .unauthorized(async (error, req) => {
-                    console.log('401');
                     cfg.unauthorized();
+                    console.log(error);
                     localStorage.removeItem('token');
                     localStorage.removeItem('uid');
                     throw new Error(error);

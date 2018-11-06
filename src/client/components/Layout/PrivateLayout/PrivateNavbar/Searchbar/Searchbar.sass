@@ -1,0 +1,27 @@
+.searchbar
+    position: relative
+
+.input
+    font-size: $text-sm
+    width: 350px
+    padding: $spacing-xxs
+    border-radius: 0 !important
+    &::placeholder
+        color: $color-gray-4
+        font-style: italic
+    &:focus
+        outline: none
+
+.results_wrapper
+    position: absolute
+    top: 100%
+    width: 100%
+    padding: $spacing-xs
+    background-color: $color-white
+    font-size: $text-sm
+    box-shadow: 0 3px 6px transparentize($color-black, 0.8)
+
+.result
+    a
+        color: $color-black
+        font-size: $text-sm

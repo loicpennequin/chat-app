@@ -4,6 +4,7 @@ import { subscribe } from 'react-contextual';
 import socket from './../../resources/services/ioService.js';
 import { init } from './../../resources/services/RESTService.js';
 import UserModel from './../../resources/models/UserModel.js';
+import AuthModel from './../../resources/models/AuthModel.js';
 import PublicLayout from './PublicLayout/PublicLayout.jsx';
 import PrivateLayout from './PrivateLayout/PrivateLayout.jsx';
 import Routes from './../Routes/Routes.jsx';
@@ -29,9 +30,10 @@ class Layout extends Component {
             needPrefetch: false
         };
 
-        init({ unauthorized: this.props.logout });
-
+        this.logout = this.logout.bind(this);
         this.updateUser = this.updateUser.bind(this);
+
+        init({ unauthorized: this.logout });
     }
 
     componentDidMount() {
@@ -51,6 +53,11 @@ class Layout extends Component {
         socket.off('contact logged off', this.updateUser);
         socket.off('new contact request', this.updateUser);
         socket.off('contact request accepted', this.updateUser);
+    }
+
+    async logout() {
+        await this.props.logout();
+        await AuthModel.logout();
     }
 
     async updateUser(data) {
@@ -80,6 +87,7 @@ class Layout extends Component {
 function mapStateToProps(store) {
     return {
         authenticated: store.authenticated,
+        logout: store.logout,
         currentUser: store.currentUser,
         routes: store.routes,
         setCurrentUser: store.setCurrentUser
