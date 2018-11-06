@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { subscribe } from 'react-contextual';
 import UserModel from './../../../resources/models/UserModel.js';
 import { Link } from 'react-router-dom';
+import './Dashboard.sass';
 
 @subscribe(mapStateToProps)
 class Dashboard extends Component {
@@ -12,10 +13,11 @@ class Dashboard extends Component {
     render() {
         const { currentUser } = this.props;
         return currentUser ? (
-            <>
-                <h1>Hello {currentUser?.username} ! this is your dashboard.</h1>
+            <div styleName="dashboard">
+                <h1 styleName="heading">Welcome back {currentUser?.username} !</h1>
+                <h2 styleName="sub-heading">This is your dashboard.</h2>
                 <Link to={`/profile/${currentUser.id}`}>Your profile</Link>
-            </>
+            </div>
         ) : (
             <div>Dashboard Loading...</div>
         );

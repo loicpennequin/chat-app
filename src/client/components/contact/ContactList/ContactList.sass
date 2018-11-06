@@ -1,6 +1,6 @@
 .contact-list
-    background-color: $color-background
-    border-right: solid 1px $color-gray-4
+    background-color: transparentize($color-background, 0.8)
+    border-right: solid 1px $color-gray-2
 
 .section_title
     text-align: center
@@ -8,8 +8,8 @@
     background-color: $color-foreground
     padding: $spacing-xxs 0
     font-family: $font-title
-    border-bottom: solid 1px $color-gray-4
-    border-top: solid 1px $color-gray-4
+    border-bottom: solid 1px $color-gray-2
+    border-top: solid 1px $color-gray-2
     margin: 0
     user-select: none
 
@@ -35,8 +35,9 @@
 
 .no-contact
     padding-left: $spacing-sm
-    color: $color-gray-4
-    
+    font-family: $font-title
+    opacity: 0.75
+
 .contact_avatar
     margin-right: $spacing-xs
 
