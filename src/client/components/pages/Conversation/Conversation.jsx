@@ -3,6 +3,7 @@ import { subscribe } from 'react-contextual';
 import { withRouter } from 'react-router-dom';
 import UserModel from './../../../resources/models/UserModel.js';
 import MessageModel from './../../../resources/models/MessageModel.js';
+import formatTime from './../../../resources/utils/formatTime.js';
 import MessageSender from './MessageSender/MessageSender.jsx';
 import socket from './../../../resources/services/ioService.js';
 import Avatar from './../../UI/Avatar/Avatar.jsx';
@@ -59,9 +60,11 @@ class Conversation extends Component {
     }
 
     render() {
+        const displayAvatar = (message, i) =>
+            this.props?.messages[i + 1]?.sender?.id !== message.sender.id;
         return (
             <ul styleName="wrapper" className="container">
-                {this.props?.messages?.map(message => {
+                {this.props?.messages?.map((message, i) => {
                     const isSelf =
                         message.sender.id === this.props.currentUser.id;
                     return (
@@ -69,9 +72,22 @@ class Conversation extends Component {
                             styleName={`message ${isSelf ? 'self' : ''}`}
                             key={message.id}
                         >
-                            <Avatar user={message.sender} size="lg" />
-                            <div styleName="message_content">
-                                {message.content}
+                            <div
+                                styleName="message_avatar"
+                                style={{
+                                    opacity: displayAvatar(message, i) ? 1 : 0
+                                }}
+                            >
+                                <Avatar user={message.sender} size="lg" />
+                            </div>
+
+                            <div>
+                                <div styleName="message_content">
+                                    {message.content}
+                                </div>
+                                <div styleName="message_date">
+                                    {formatTime(message.created_at)}
+                                </div>
                             </div>
                         </li>
                     );

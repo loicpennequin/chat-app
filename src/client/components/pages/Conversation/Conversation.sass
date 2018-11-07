@@ -7,17 +7,18 @@
     align-self: flex-start
     display: flex
     flex-direction: row
-    margin-bottom: $spacing-sm
+    margin-top: $spacing-sm
     &.self
         align-self: flex-end
         flex-direction: row-reverse
         .message_content
             background: linear-gradient(130DEG, $color-secondary, $color-secondary-dark)
             color: $color-white
+        .message_date
+            text-align: right
 
 .message_avatar
-    align-self: flex-end
-
+    // align-self: flex-end
 
 .message_content
     background: $color-white
@@ -27,3 +28,9 @@
     align-self: flex-start
     margin: 0 $spacing-sm
     max-width: 55ch
+
+.message_date
+    color: $color-white
+    font-size: $text-xs
+    margin: $spacing-xs $spacing-sm 0
+    opacity: 0.6

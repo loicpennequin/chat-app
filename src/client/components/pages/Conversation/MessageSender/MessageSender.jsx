@@ -27,6 +27,7 @@ class MessageSender extends Component {
                     value={this.state.message}
                     onChange={e => this.onChange(e)}
                     styleName="input"
+                    placeholder="send a message !"
                 />
                 <input type="submit" value="send" styleName="submit" />
             </form>

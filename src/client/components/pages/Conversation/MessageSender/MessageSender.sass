@@ -7,11 +7,26 @@
     flex-direction: row
     width: 100%
     max-width: $container-max-width
+    overflow: hidden
+    border-radius: $spacing-md
     +hd-only
         max-width: $container-max-width-hd
 
 .input
     flex-grow: 1
+    font-size: $text-lg
+    padding: $spacing-xxs
+    padding-left: $spacing-md
+    &::placeholder
+        color: $color-gray-4
+        font-style: italic
 
 .submit
     background-color: $color-secondary
+    font-size: $text-lg
+    border: none
+    padding: $spacing-xxs
+    padding-right: $spacing-xs
+    color: $color-white
+    &:focus
+        background-color: $color-secondary-dark
