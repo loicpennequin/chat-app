@@ -14,10 +14,10 @@ const getInitialData = async (req, res, routes) => {
     const initialData = {
         authenticated: !!req.user,
         ...fetchedData.reduce((acc, current) =>
-            Object.assign(acc, { ...current })
+            Object.assign(acc, { ...current }), {}
         )
     };
-    
+
     return initialData;
 };
 
