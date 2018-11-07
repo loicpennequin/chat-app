@@ -24,12 +24,15 @@ class Conversation extends Component {
         super(props);
         this.state = {};
 
+        this.scrollEnd = React.createRef();
+        this.scrollToBottom = this.scrollToBottom.bind(this);
         this.updateMessages = this.updateMessages.bind(this);
     }
     componentDidMount() {
         socket.on('new message', () => {
             this.updateMessages();
         });
+        this.scrollToBottom();
     }
 
     componentWillUnMount() {
@@ -37,9 +40,10 @@ class Conversation extends Component {
     }
 
     async updateMessages() {
-        this.props.setMessages(
+        await this.props.setMessages(
             await MessageModel.findByUser(this.props.match.params.id)
         );
+        this.scrollToBottom();
     }
 
     async componentDidUpdate(prevProps, prevState) {
@@ -57,6 +61,10 @@ class Conversation extends Component {
             content: message
         });
         this.updateMessages();
+    }
+
+    scrollToBottom(){
+        this.scrollEnd.current.scrollIntoView({ behavior: 'instant' });
     }
 
     render() {
@@ -92,6 +100,7 @@ class Conversation extends Component {
                         </li>
                     );
                 })}
+                <div style={{ float:'left', clear: 'both' }} ref={this.scrollEnd}></div>
                 <MessageSender onSubmit={message => this.onSubmit(message)} />
             </ul>
         );

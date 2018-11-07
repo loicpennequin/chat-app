@@ -11,7 +11,7 @@ const WriteFilePlugin = require('write-file-webpack-plugin');
 
 module.exports = env => ({
 	mode: env.NODE_ENV,
-	devtool: 'inline-source-map',
+	devtool: env.NODE_ENV === 'development' ? 'eval-source-map' : 'inline-source-maps',
 	output: {
 		filename: '[name].js',
 		publicPath: '/assets/'
@@ -53,6 +53,10 @@ module.exports = env => ({
             __ENV__ : '"' + env.NODE_ENV + '"',
             __PORT__: env.port
         }),
+        new webpack.ContextReplacementPlugin(
+            /moment[/\\]locale$/,
+            /en|fr/
+        ),
 		new WriteFilePlugin(),
 		new CleanWebpackPlugin(['public/assets', 'src/server/views'], {
 			root: path.join(__dirname, '../../'),

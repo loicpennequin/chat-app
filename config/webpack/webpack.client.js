@@ -27,12 +27,12 @@ module.exports = env => ({
                 test: /\.sass$/,
                 exclude: /app.sass/,
                 use: [
-                    'css-hot-loader',
+                    env.NODE_ENV !== 'production' && 'css-hot-loader',
                     env.NODE_ENV === 'production' ? MiniCssExtractPlugin.loader : 'style-loader',
                     {
                         loader: 'css-loader',
                         options: {
-                            sourceMap: true,
+                            sourceMap: env.NODE_ENV !== 'production',
                             modules: true,
                             localIdentName:
                                 '[name]-[local]--[hash:base64:5]'
@@ -50,7 +50,7 @@ module.exports = env => ({
                             ))
                         }
                     }
-                ]
+                ].filter(loader => loader !== false)
             },
             //GLobal Styles
             {
