@@ -29,7 +29,7 @@ class MessageSender extends Component {
                     styleName="input"
                     placeholder="send a message !"
                 />
-                <input type="submit" value="send" styleName="submit" />
+                {/* <input type="submit" value="send" styleName="submit" /> */}
             </form>
         );
     }
