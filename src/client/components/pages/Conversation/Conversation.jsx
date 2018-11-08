@@ -32,7 +32,8 @@ class Conversation extends Component {
         socket.on('new message', () => {
             this.updateMessages();
         });
-        this.scrollToBottom();
+        setTimeout(this.scrollToBottom, 500);
+
     }
 
     componentWillUnMount() {
@@ -63,46 +64,52 @@ class Conversation extends Component {
         this.updateMessages();
     }
 
-    scrollToBottom(){
+    scrollToBottom() {
         this.scrollEnd.current.scrollIntoView({ behavior: 'instant' });
     }
 
     render() {
         const displayAvatar = (message, i) =>
             this.props?.messages[i + 1]?.sender?.id !== message.sender.id;
+        const messages = this.props?.messages;
         return (
-            <ul styleName="wrapper" className="container">
-                {this.props?.messages?.map((message, i) => {
-                    const isSelf =
-                        message.sender.id === this.props.currentUser.id;
-                    return (
-                        <li
-                            styleName={`message ${isSelf ? 'self' : ''}`}
-                            key={message.id}
-                        >
-                            <div
-                                styleName="message_avatar"
-                                style={{
-                                    opacity: displayAvatar(message, i) ? 1 : 0
-                                }}
-                            >
-                                <Avatar user={message.sender} size="lg" />
-                            </div>
+            <>
+                <ul styleName="wrapper" className="container">
+                    {messages?.map((message, i) => {
+                        const isSelf =
+                            message.sender.id === this.props.currentUser.id;
 
-                            <div>
-                                <div styleName="message_content">
-                                    {message.content}
+                        return (
+                            <li
+                                styleName={`message ${isSelf ? 'self' : ''}`}
+                                key={message.id}
+                                ref={i === messages.length -1 ? this.scrollEnd : null}
+                            >
+                                <div
+                                    styleName="message_avatar"
+                                    style={{
+                                        opacity: displayAvatar(message, i)
+                                            ? 1
+                                            : 0
+                                    }}
+                                >
+                                    <Avatar user={message.sender} size="lg" />
                                 </div>
-                                <div styleName="message_date">
-                                    {formatTime(message.created_at)}
+
+                                <div>
+                                    <div styleName="message_content">
+                                        {message.content}
+                                    </div>
+                                    <div styleName="message_date">
+                                        {formatTime(message.created_at)}
+                                    </div>
                                 </div>
-                            </div>
-                        </li>
-                    );
-                })}
-                <div style={{ float:'left', clear: 'both' }} ref={this.scrollEnd}></div>
+                            </li>
+                        );
+                    })}
+                </ul>
                 <MessageSender onSubmit={message => this.onSubmit(message)} />
-            </ul>
+            </>
         );
     }
 }

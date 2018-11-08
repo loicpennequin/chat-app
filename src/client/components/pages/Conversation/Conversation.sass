@@ -2,11 +2,11 @@
     display: flex
     flex-direction: column
     padding-top: $spacing-md
-    padding-bottom: $spacing-xxl
+    padding: $spacing-lg
 
 .message
-    align-self: flex-start
     display: flex
+    align-self: flex-start
     flex-direction: row
     margin-top: $spacing-sm
     &.self
@@ -17,6 +17,8 @@
             color: $color-white
         .message_date
             text-align: right
+    &:last-of-type
+        margin-bottom: $spacing-lg
 
 .message_avatar
     // align-self: flex-end

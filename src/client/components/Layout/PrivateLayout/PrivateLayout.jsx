@@ -5,9 +5,9 @@ import './PrivateLayout.sass';
 
 const PrivateLayout = ({ children }) => (
     <div styleName="layout">
-        <div style={{ gridArea: 'navbar' }}>
+        <header style={{ gridArea: 'navbar' }}>
             <PrivateNavbar />
-        </div>
+        </header>
         <ContactList />
         <main>{children}</main>
     </div>

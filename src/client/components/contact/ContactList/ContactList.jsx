@@ -66,7 +66,7 @@ class ContactList extends Component {
         ) : !currentUser.contacts.length > 0 ? (
             <div>You dont have any contact yet.</div>
         ) : (
-            <>
+            <div styleName="contact_fixed-wrapper">
                 <h3 styleName="section_title">
                     Online({onlineContacts.length})
                     <span styleName="section_title_toggle">
@@ -91,7 +91,7 @@ class ContactList extends Component {
                     </span>
                 </h3>
                 {offlineList}
-            </>
+            </div>
         );
 
         return <aside styleName="contact-list">{contacts}</aside>;

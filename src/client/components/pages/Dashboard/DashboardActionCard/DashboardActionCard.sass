@@ -8,7 +8,7 @@
     overflow: hidden
     margin: $spacing-md
     background: none
-    min-width: 150px
+    min-width: 200px
     cursor: pointer
     padding: $spacing-lg
     border: solid 2px $color-white
@@ -36,3 +36,7 @@
 
 .text
     font-size: $text-lg
+
+//profile icon looks optically unbalanced so we need to adjust it
+.action-card:nth-of-type(1) .icon
+    transform: translateX(-8px)
